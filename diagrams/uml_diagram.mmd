@@ -1,0 +1,141 @@
+classDiagram
+    class Song {
+        +int id
+        +str title
+        +str artist
+        +str genre
+        +str mood
+        +float energy
+        +float tempo_bpm
+        +float valence
+        +float danceability
+        +float acousticness
+        +float popularity
+        +str release_decade
+        +List~str~ mood_tags
+        +bool explicit_content
+        +float instrumentalness
+    }
+
+    class UserProfile {
+        +str favorite_genre
+        +str favorite_mood
+        +float target_energy
+        +bool likes_acoustic
+        +float preferred_danceability
+        +str preferred_decade
+        +bool wants_instrumental
+        +bool clean_only
+        +bool prefer_popular
+    }
+
+    class Notice {
+        +str level
+        +str field
+        +str message
+    }
+
+    class PlanningError
+
+    class Recommender {
+        +List~Song~ songs
+        +recommend(user, k) List~Song~
+        +explain_recommendation(user, song) str
+    }
+
+    class KnowledgeDocument {
+        +str id
+        +str text
+        +str source
+        +List~str~ tags
+    }
+
+    class KnowledgeBase {
+        +List~KnowledgeDocument~ documents
+        +load(path)
+        +retrieve(query, k) List~KnowledgeDocument~
+    }
+
+    class LLMClient {
+        +generate(prompt) str
+        +generate_json(prompt, schema) Dict
+    }
+
+    class ParsedTasteResult {
+        +Dict profile
+        +List~str~ sources
+        +str raw_response
+    }
+
+    class RAGExplanation {
+        +str text
+        +List~str~ sources
+    }
+
+    class RAGEngine {
+        +KnowledgeBase knowledge_base
+        +LLMClient llm_client
+        +parse_taste_query(nl_query) ParsedTasteResult
+        +explain_with_context(user, song, base_reasons) RAGExplanation
+    }
+
+    class EvalCase {
+        +str id
+        +str kind
+        +Dict input
+        +Dict expected
+    }
+
+    class EvalResult {
+        +str case_id
+        +bool passed
+        +Any actual
+        +str notes
+    }
+
+    class ConsistencyChecker {
+        +measure(fn, input, runs) float
+    }
+
+    class GroundednessChecker {
+        +check(result) float
+    }
+
+    class EvalReport {
+        +List~EvalResult~ results
+        +float pass_rate
+        +float avg_consistency
+        +float avg_groundedness
+        +to_markdown() str
+    }
+
+    class ReliabilityHarness {
+        +List~EvalCase~ cases
+        +Recommender recommender
+        +RAGEngine rag_engine
+        +run_all() EvalReport
+        +run_case(case) EvalResult
+    }
+
+    Recommender "1" --> "*" Song
+    Recommender ..> UserProfile
+    Recommender ..> Notice
+    Recommender ..> PlanningError
+
+    RAGEngine --> KnowledgeBase
+    RAGEngine --> LLMClient
+    RAGEngine --> ParsedTasteResult
+    RAGEngine --> RAGExplanation
+    KnowledgeBase "1" *-- "*" KnowledgeDocument
+    ParsedTasteResult ..> UserProfile : validated into
+
+    ReliabilityHarness --> Recommender
+    ReliabilityHarness --> RAGEngine
+    ReliabilityHarness --> ConsistencyChecker
+    ReliabilityHarness --> GroundednessChecker
+    ReliabilityHarness "1" *-- "*" EvalCase
+    ReliabilityHarness --> EvalReport
+    EvalReport "1" *-- "*" EvalResult
+    GroundednessChecker ..> RAGExplanation
+    GroundednessChecker ..> ParsedTasteResult
+    ConsistencyChecker ..> RAGEngine

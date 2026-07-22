@@ -1,0 +1,37 @@
+[
+  {
+    "id": "profile-score-pop-happy",
+    "kind": "profile_score",
+    "input": {
+      "user_prefs": {"genre": "pop", "mood": "happy", "energy": 0.8, "likes_acoustic": false}
+    },
+    "expected": {"top_song_id": 1}
+  },
+  {
+    "id": "nl-parse-early-2000s-pop",
+    "kind": "nl_parse",
+    "input": {"nl_query": "I want something upbeat and nostalgic, kind of like early-2000s pop"},
+    "expected": {"genre": "pop"}
+  },
+  {
+    "id": "nl-parse-study-lofi",
+    "kind": "nl_parse",
+    "input": {"nl_query": "I need cozy, mellow lofi to study to"},
+    "expected": {"genre": "lofi"}
+  },
+  {
+    "id": "nl-parse-acoustic-folk",
+    "kind": "nl_parse",
+    "input": {"nl_query": "Give me something acoustic and unplugged, folk vibes"},
+    "expected": {"genre": "folk", "likes_acoustic": true}
+  },
+  {
+    "id": "explanation-sunrise-city",
+    "kind": "explanation",
+    "input": {
+      "song_id": 1,
+      "user_prefs": {"genre": "pop", "mood": "happy", "energy": 0.8, "likes_acoustic": false}
+    },
+    "expected": {"min_groundedness": 0.5}
+  }
+]

@@ -1,0 +1,134 @@
+[
+  {
+    "id": "genre-pop",
+    "text": "Pop is built around catchy, polished hooks, produced/electronic-leaning instrumentation, and broad emotional accessibility. Catalog pop songs here lean bright, upbeat, and high-energy.",
+    "source": "genre-glossary",
+    "tags": ["pop", "catchy", "polished", "produced", "electronic", "upbeat", "bright", "mainstream"]
+  },
+  {
+    "id": "genre-indie-pop",
+    "text": "Indie pop shares pop's catchy songwriting but with a lighter, more DIY/independent production feel and often a warmer, less maximalist sound than mainstream pop.",
+    "source": "genre-glossary",
+    "tags": ["indie pop", "indie", "diy", "independent", "warm", "carefree", "sunny"]
+  },
+  {
+    "id": "genre-lofi",
+    "text": "Lo-fi is low-energy, low-fidelity, beat-driven music built for background listening — studying, focusing, or winding down. Expect mellow tempos, tape-hiss textures, and a cozy, unhurried feel.",
+    "source": "genre-glossary",
+    "tags": ["lofi", "lo-fi", "chill", "cozy", "study", "mellow", "background", "beats", "focus", "relax", "relaxing"]
+  },
+  {
+    "id": "genre-rock",
+    "text": "Rock centers on guitar-driven instrumentation, live-band energy, and a punchier, less electronic production than pop. Energy can range from driving/intense to laid-back, but the core instrumentation stays guitar/drum-led.",
+    "source": "genre-glossary",
+    "tags": ["rock", "guitar", "band", "intense", "driving", "adrenaline"]
+  },
+  {
+    "id": "genre-ambient",
+    "text": "Ambient music is atmospheric and largely textural rather than rhythm-driven — slow-moving, spacious, and meant to create a mood rather than demand attention. Very low energy, often heavily instrumental.",
+    "source": "genre-glossary",
+    "tags": ["ambient", "atmospheric", "spacious", "dreamy", "weightless", "introspective", "instrumental", "calm"]
+  },
+  {
+    "id": "genre-jazz",
+    "text": "Jazz emphasizes improvisation, warm acoustic instrumentation (piano, brass, upright bass), and a relaxed, intimate feel. Tempos are often moderate and the mood tends toward warm and nostalgic rather than high-energy.",
+    "source": "genre-glossary",
+    "tags": ["jazz", "acoustic", "warm", "intimate", "nostalgic", "relaxed", "smooth"]
+  },
+  {
+    "id": "genre-synthwave",
+    "text": "Synthwave is built on retro analog-synth textures evoking 1980s film scores — moody, cinematic, and nocturnal, usually with a steady electronic pulse rather than acoustic instrumentation.",
+    "source": "genre-glossary",
+    "tags": ["synthwave", "synth", "retro", "80s", "cinematic", "nocturnal", "moody", "brooding", "electronic"]
+  },
+  {
+    "id": "genre-folk",
+    "text": "Folk leans on acoustic guitar and storytelling lyrics, with a warm, organic, often nostalgic or bittersweet emotional tone. Production is understated rather than electronic.",
+    "source": "genre-glossary",
+    "tags": ["folk", "acoustic", "storytelling", "nostalgic", "bittersweet", "wistful", "organic"]
+  },
+  {
+    "id": "genre-metal",
+    "text": "Metal is loud, distorted, and aggressive — heavy guitars, fast tempos, and intense, often angry or rebellious energy. Very low acousticness, very high energy.",
+    "source": "genre-glossary",
+    "tags": ["metal", "heavy", "aggressive", "angry", "rebellious", "loud", "distorted", "intense", "explosive"]
+  },
+  {
+    "id": "genre-rnb",
+    "text": "R&B favors smooth, groove-based production, romantic or sensual themes, and a moderate, intimate energy — more about feel and vocal delivery than loudness.",
+    "source": "genre-glossary",
+    "tags": ["r&b", "rnb", "smooth", "romantic", "sensual", "intimate", "groove"]
+  },
+  {
+    "id": "genre-edm",
+    "text": "EDM (electronic dance music) is high-energy, club-oriented, and built for dancing — big electronic drops, euphoric/triumphant mood, and very low acousticness.",
+    "source": "genre-glossary",
+    "tags": ["edm", "electronic", "dance", "euphoric", "triumphant", "club", "high-energy"]
+  },
+  {
+    "id": "genre-country",
+    "text": "Country blends folk-adjacent acoustic instrumentation with storytelling lyrics, often nostalgic or homesick in tone, at a moderate, easygoing energy.",
+    "source": "genre-glossary",
+    "tags": ["country", "acoustic", "nostalgic", "homesick", "earthy", "storytelling"]
+  },
+  {
+    "id": "genre-hiphop",
+    "text": "Hip-hop centers on rhythmic vocal delivery (rapping) over a beat, often with confident or assertive lyrical themes and a gritty, punchy energy.",
+    "source": "genre-glossary",
+    "tags": ["hip-hop", "hiphop", "rap", "confident", "gritty", "assertive", "beat"]
+  },
+  {
+    "id": "genre-classical",
+    "text": "Classical is orchestral/instrumental, with no vocals and a wide dynamic range — catalog examples here lean serene, meditative, and very low energy, with very high acousticness and instrumentalness.",
+    "source": "genre-glossary",
+    "tags": ["classical", "orchestral", "instrumental", "serene", "meditative", "peaceful", "ethereal"]
+  },
+  {
+    "id": "genre-reggae",
+    "text": "Reggae has an offbeat, laid-back rhythmic groove with a breezy, sun-soaked, carefree mood — moderate energy, moderate acousticness.",
+    "source": "genre-glossary",
+    "tags": ["reggae", "breezy", "carefree", "sun-soaked", "laid-back", "groove"]
+  },
+  {
+    "id": "mood-glossary",
+    "text": "Mood vocabulary used across the catalog: happy/uplifting (bright, positive), chill/relaxed (calm, unhurried), intense (high-adrenaline, driving), moody/brooding (dark, cinematic), focused (steady, meditative concentration), nostalgic/bittersweet/wistful (looking back fondly), angry/rebellious (aggressive), romantic/sensual (intimate), euphoric/triumphant (elated), confident/assertive (self-assured), peaceful/serene (tranquil), carefree/breezy (lighthearted).",
+    "source": "mood-glossary",
+    "tags": ["happy", "chill", "relaxed", "intense", "moody", "brooding", "focused", "nostalgic", "bittersweet", "wistful", "angry", "rebellious", "romantic", "sensual", "euphoric", "triumphant", "confident", "assertive", "peaceful", "serene", "carefree", "breezy"]
+  },
+  {
+    "id": "energy-vocabulary",
+    "text": "Energy vocabulary: words like upbeat, energetic, intense, pumped, adrenaline, and high-tempo describe high energy (closer to 1.0). Words like mellow, calm, laid-back, slow, sleepy, and gentle describe low energy (closer to 0.0). Neutral/moderate descriptions (\"easygoing\", \"steady\") sit around 0.5.",
+    "source": "feature-vocabulary",
+    "tags": ["upbeat", "energetic", "intense", "pumped", "adrenaline", "mellow", "calm", "laid-back", "slow", "gentle", "energy", "tempo"]
+  },
+  {
+    "id": "acousticness-instrumentalness-vocabulary",
+    "text": "Acousticness vocabulary: \"acoustic\", \"unplugged\", \"organic\", \"stripped-back\" imply high acousticness (closer to 1.0); \"electronic\", \"synth\", \"produced\", \"digital\" imply low acousticness (closer to 0.0). Instrumentalness vocabulary: \"instrumental\", \"no lyrics\", \"no vocals\", \"background music\" imply wanting instrumental tracks; \"vocal-driven\", \"lyrics matter to me\" imply not wanting instrumental tracks.",
+    "source": "feature-vocabulary",
+    "tags": ["acoustic", "unplugged", "organic", "electronic", "synth", "produced", "instrumental", "vocals", "lyrics", "acousticness", "instrumentalness"]
+  },
+  {
+    "id": "decade-vocabulary",
+    "text": "Decade vocabulary: \"retro\", \"throwback\", \"old-school\", or a specific decade name (e.g. \"90s\", \"2000s\") map to that release_decade preference (formatted like \"1990s\", \"2000s\", \"2010s\", \"2020s\" in this catalog). \"modern\", \"current\", \"new\" map to \"2020s\". If no decade is mentioned, leave preferred_decade unset rather than guessing.",
+    "source": "feature-vocabulary",
+    "tags": ["retro", "throwback", "old-school", "modern", "current", "decade", "90s", "2000s", "2010s", "2020s"]
+  },
+  {
+    "id": "artist-neon-echo",
+    "text": "Neon Echo spans both bright, high-energy pop (\"Sunrise City\") and moodier synthwave (\"Night Drive Loop\") — a versatile, electronic-leaning artist rather than a single-genre act.",
+    "source": "artist-notes",
+    "tags": ["neon echo", "pop", "synthwave", "electronic"]
+  },
+  {
+    "id": "artist-loroom",
+    "text": "LoRoom makes cozy, low-energy lo-fi built for studying and focusing (\"Midnight Coding\", \"Focus Flow\") — consistently mellow, beat-driven background music.",
+    "source": "artist-notes",
+    "tags": ["loroom", "lofi", "study", "focus", "cozy"]
+  },
+  {
+    "id": "artist-blackout-sirens",
+    "text": "Blackout Sirens plays aggressive, high-energy metal (\"Crimson Fury\") with explicit, rebellious lyrical content — not a fit for listeners who asked for clean lyrics only.",
+    "source": "artist-notes",
+    "tags": ["blackout sirens", "metal", "aggressive", "explicit"]
+  }
+]

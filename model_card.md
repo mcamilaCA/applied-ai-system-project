@@ -83,6 +83,8 @@ For additional features, I'd want to let listeners describe their taste with mor
 
 For explaining recommendations, I'd want to move past the raw point breakdown and instead call out, in a sentence or two, the one or two reasons a song was picked ("this made the list mostly because it matches your mood and energy, even though it's a different genre than usual"), so the reasoning reads more like a friend's recommendation and less like a receipt.
 
+**Update:** this is now implemented as an opt-in "✨ AI explanation" alongside the raw breakdown — see §10.
+
 For diversity, I'd want to add a genre/mood "closeness" map so related styles get partial credit instead of zero (so a pop fan can still get credit for indie pop, for example), and maybe deliberately slip in one or two songs outside the listener's usual pattern so the recommendations don't just reinforce the same narrow slice of the catalog every time.
 
 For handling messier or more complex tastes, I'd want the system to clean up user input before scoring it, trimming extra spaces, ignoring letter case, catching typos or mismatched field names instead of silently ignoring them, and refusing to produce a ranked list at all if a preference like energy comes in undefined, rather than quietly returning a meaningless order. I'd also want a bigger, more evenly spread catalog so listeners with less common tastes have more than one song to choose from.
@@ -91,7 +93,27 @@ For handling messier or more complex tastes, I'd want the system to clean up use
 
 ---
 
-## 9. Personal Reflection  
+## 9. AI Features: RAG + Reliability
+
+Two AI-powered features sit on top of the deterministic scoring described in §3, neither of which changes the scoring itself:
+
+1. **Natural-language taste parser.** A listener can describe their taste in plain English instead of filling out the form. This is retrieval-augmented: the description is first matched against a small local knowledge base (`data/knowledge_base.json` — short reference notes on each catalog genre, a mood-word glossary, and energy/acousticness/decade vocabulary mappings) to ground how words like "upbeat" or "retro" should be interpreted, and only then handed to an LLM to produce a structured preferences dict. That dict is validated by the exact same `plan_user_prefs` pipeline (§3) a manually-typed profile goes through — a malformed field coming out of the LLM (wrong type, unrecognized genre) gets caught the same way a typo would, rather than needing separate validation logic.
+2. **Grounded explanations.** Optionally, the raw per-feature point breakdown for a recommendation can be turned into a short natural-language paragraph. The prompt explicitly restricts the model to only the score breakdown and retrieved reference notes as source material, specifically to prevent it from inventing details about a song or artist that aren't actually supported.
+
+**Why grounding matters here specifically:** the recommender's whole value proposition (§5) is that a listener can trust the "why" behind a pick. An ungrounded LLM explanation that sounds confident but states something untrue would undermine that more than the old plain point-breakdown ever could, since it reads as more authoritative while being less checkable.
+
+**Reliability harness.** Introducing an LLM call means, for the first time, the same input can produce a different output on two different runs, and generated text is capable of inventing details the retrieval step didn't actually support. `src/reliability.py` runs a small set of golden cases (`data/eval_cases.json`) through three checks:
+- A profile-score regression case: exact-match top-song check against the deterministic core, no LLM involved — a sanity guard that nothing above accidentally broke §3's scoring.
+- NL-parse cases: does the parsed profile match the expected genre/preference, and how *consistent* is the parse across repeated runs of the same query (`ConsistencyChecker`)?
+- An explanation case: how *grounded* is the generated text in the score breakdown and retrieved notes it was allowed to draw on (`GroundednessChecker`, a keyword-overlap heuristic, not another LLM call), and how consistent is repeated generation?
+
+Run `python -m src.reliability` to produce `logs/reliability_report.md`.
+
+**Limitations of this iteration:** the knowledge base is small (~20 documents, one per catalog genre plus a few vocabulary docs) and retrieval is plain keyword/tag overlap rather than embeddings — transparent and easy to debug, but it will miss a query that's semantically related but shares no words with any document. The eval set is five cases, enough to catch an obvious regression but not enough to characterize the AI features' behavior broadly. `GroundednessChecker`'s keyword-overlap scoring will also under-score a paraphrase that's genuinely grounded but doesn't reuse the source wording, and over-score a claim that happens to share common words with the context without actually being supported by them. Link-based "find something similar to this song" input (YouTube/Spotify links) and catalog expansion were both considered for this iteration and deliberately deferred to keep scope realistic — see prior brainstorming.
+
+---
+
+## 10. Personal Reflection  
 
 As a music lover, I had always been curious about how the recommendation system worked and, even though I know this is not how full scale algorithms are, it did serve to open my eyes and demistify its complexity. Now I have a better understanding of how it might work, and even though it still feels like magic, at least I am able to imagine what goes behind the scenes.
 
