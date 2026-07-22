@@ -28,10 +28,10 @@ Two AI-powered additions sit on top of the deterministic scoring above -- neithe
 
 **2. Grounded explanations.** Each recommendation already comes with a raw per-feature point breakdown. Optionally, `RAGEngine.explain_with_context` turns that breakdown into a short natural-language paragraph, using the same knowledge base for extra genre/artist context -- and is explicitly instructed to only state things the breakdown or retrieved notes actually support, so it can't invent facts about a song.
 
-**Setup:** both features need an Anthropic API key. Export it before running the app or the CLI example:
+**Setup:** both features need a free Groq API key (console.groq.com -- no credit card required). Export it before running the app or the CLI example:
 
 ```bash
-export ANTHROPIC_API_KEY=your-key-here
+export GROQ_API_KEY=your-key-here
 ```
 
 Without it, everything else (the structured form, the CLI's hardcoded example) still works fine -- only the AI-powered paths are unavailable, and they fail with a clear message rather than crashing.
@@ -77,7 +77,7 @@ To interact with the recommender in a browser instead of the CLI:
 streamlit run src/app.py
 ```
 
-This opens a page where you can set your genre, mood, energy, and other preferences with sliders/dropdowns in the sidebar, and see ranked recommendations with a score breakdown for each song. There's also an "✨ Or just describe your taste in your own words" box above the results (needs `ANTHROPIC_API_KEY`, see above) and a "✨ AI explanation" tab on each recommendation card.
+This opens a page where you can set your genre, mood, energy, and other preferences with sliders/dropdowns in the sidebar, and see ranked recommendations with a score breakdown for each song. There's also an "✨ Or just describe your taste in your own words" box above the results (needs `GROQ_API_KEY`, see above) and a "✨ AI explanation" tab on each recommendation card.
 
 ### Running Tests
 
@@ -87,7 +87,7 @@ Run the tests with:
 pytest
 ```
 
-This includes `tests/test_rag.py` and `tests/test_reliability.py`, which cover the AI features' surrounding logic (retrieval, JSON parsing, consistency/groundedness scoring) against fake LLM responses -- no `ANTHROPIC_API_KEY` or network access needed for `pytest` to pass. Only the live paths (the Streamlit AI box/tabs, `python -m src.reliability`) need a real key.
+This includes `tests/test_rag.py` and `tests/test_reliability.py`, which cover the AI features' surrounding logic (retrieval, JSON parsing, consistency/groundedness scoring) against fake LLM responses -- no `GROQ_API_KEY` or network access needed for `pytest` to pass. Only the live paths (the Streamlit AI box/tabs, `python -m src.reliability`) need a real key.
 
 You can add more tests in `tests/test_recommender.py`.
 

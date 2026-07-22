@@ -79,10 +79,10 @@ def test_generate_json_raises_value_error_on_garbage():
 
 
 def test_llm_client_raises_clear_error_without_api_key(monkeypatch):
-    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("GROQ_API_KEY", raising=False)
     client = LLMClient()
 
-    with pytest.raises(RuntimeError, match="ANTHROPIC_API_KEY"):
+    with pytest.raises(RuntimeError, match="GROQ_API_KEY"):
         client.generate("hello")
 
 

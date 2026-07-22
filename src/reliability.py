@@ -272,9 +272,9 @@ class ReliabilityHarness:
 
 
 def main() -> None:
-    if not os.environ.get("ANTHROPIC_API_KEY"):
+    if not os.environ.get("GROQ_API_KEY"):
         print(
-            "❌ ANTHROPIC_API_KEY is not set. The nl_parse/explanation cases need it "
+            "❌ GROQ_API_KEY is not set. The nl_parse/explanation cases need it "
             "to call the LLM -- export it and re-run."
         )
         return

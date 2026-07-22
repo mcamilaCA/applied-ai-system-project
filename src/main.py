@@ -21,7 +21,7 @@ from rag import KnowledgeBase, LLMClient, RAGEngine
 MEDALS = {1: "🥇", 2: "🥈", 3: "🥉"}
 NOTICE_ICONS = {"warning": "⚠️", "info": "ℹ️"}
 
-# Fed to RAGEngine.parse_taste_query when ANTHROPIC_API_KEY is set, so this file
+# Fed to RAGEngine.parse_taste_query when GROQ_API_KEY is set, so this file
 # doubles as a runnable example of the AI taste-parser -- see build_user_prefs().
 NL_QUERY_EXAMPLE = "I want something upbeat and nostalgic, kind of like early-2000s pop."
 
@@ -29,13 +29,13 @@ NL_QUERY_EXAMPLE = "I want something upbeat and nostalgic, kind of like early-20
 def build_user_prefs() -> dict:
     """
     Builds the profile dict that gets scored against the catalog. If
-    ANTHROPIC_API_KEY is set, demonstrates the RAG taste-parser by running
+    GROQ_API_KEY is set, demonstrates the RAG taste-parser by running
     NL_QUERY_EXAMPLE through it instead of using a hardcoded profile;
     otherwise falls back to the original hardcoded structured profile so this
     still runs end-to-end without an API key.
     """
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print("ℹ️  ANTHROPIC_API_KEY not set -- using the hardcoded example profile "
+    if not os.environ.get("GROQ_API_KEY"):
+        print("ℹ️  GROQ_API_KEY not set -- using the hardcoded example profile "
               "instead of the AI taste parser.\n")
         return {
             "genre": "pop", "mood": "happy", "energy": 0.8, "likes_acoustic": False,
@@ -43,7 +43,7 @@ def build_user_prefs() -> dict:
             "clean_only": True, "prefer_popular": True,
         }
 
-    print(f"✨ ANTHROPIC_API_KEY found -- parsing taste from: {NL_QUERY_EXAMPLE!r}\n")
+    print(f"✨ GROQ_API_KEY found -- parsing taste from: {NL_QUERY_EXAMPLE!r}\n")
     engine = RAGEngine(knowledge_base=KnowledgeBase.load(), llm_client=LLMClient())
     parsed = engine.parse_taste_query(NL_QUERY_EXAMPLE)
     print(f"   Parsed profile: {parsed.profile}")

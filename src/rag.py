@@ -24,7 +24,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List
 
-DEFAULT_MODEL = "claude-haiku-4-5-20251001"
+DEFAULT_MODEL = "openai/gpt-oss-20b"
 
 KNOWLEDGE_BASE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "knowledge_base.json")
 
@@ -84,15 +84,15 @@ class KnowledgeBase:
 
 class LLMClient:
     """
-    Thin wrapper around the Anthropic client.
+    Thin wrapper around the Groq client.
 
-    The real `anthropic.Anthropic()` client is constructed lazily, on first
-    use, not in __init__ -- so importing this module (from app.py, main.py,
-    or during pytest collection) never fails just because the `anthropic`
-    package or ANTHROPIC_API_KEY isn't available. Only actually calling
-    `generate`/`generate_json` without a key raises, with a clear message:
-    the same "fail loudly, but only when it actually matters" approach
-    already used for PlanningError in planner.py.
+    The real `groq.Groq()` client is constructed lazily, on first use, not in
+    __init__ -- so importing this module (from app.py, main.py, or during
+    pytest collection) never fails just because the `groq` package or
+    GROQ_API_KEY isn't available. Only actually calling `generate`/
+    `generate_json` without a key raises, with a clear message: the same
+    "fail loudly, but only when it actually matters" approach already used
+    for PlanningError in planner.py.
     """
 
     def __init__(self, model: str = DEFAULT_MODEL):
@@ -101,25 +101,25 @@ class LLMClient:
 
     def _get_client(self):
         if self._client is None:
-            if not os.environ.get("ANTHROPIC_API_KEY"):
+            if not os.environ.get("GROQ_API_KEY"):
                 raise RuntimeError(
-                    "ANTHROPIC_API_KEY is not set. Export it before using the "
+                    "GROQ_API_KEY is not set. Export it before using the "
                     "natural-language taste box or grounded explanations -- "
                     "the structured profile form doesn't need it."
                 )
-            import anthropic
+            import groq
 
-            self._client = anthropic.Anthropic()
+            self._client = groq.Groq()
         return self._client
 
     def generate(self, prompt: str, max_tokens: int = 512) -> str:
         client = self._get_client()
-        response = client.messages.create(
+        response = client.chat.completions.create(
             model=self.model,
             max_tokens=max_tokens,
             messages=[{"role": "user", "content": prompt}],
         )
-        return response.content[0].text
+        return response.choices[0].message.content
 
     def generate_json(self, prompt: str, max_tokens: int = 512) -> Dict[str, Any]:
         """
