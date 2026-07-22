@@ -16,3 +16,6 @@ venv/
 
 # Runtime logs
 logs/
+
+# env file
+.env
