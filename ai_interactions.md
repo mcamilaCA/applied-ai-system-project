@@ -27,21 +27,3 @@ Changes made:
 **What did you verify or fix manually?**
 
 I double checked all the code and updated the profiles in main.py to verify output match as well - and apply modifications as needed. 
-
----
-
-## Design Pattern (SF10)
-
-> Document how AI helped you choose or implement a design pattern.
-
-**Which design pattern did you use?**
-
-<!-- e.g., Strategy, Factory, Observer, etc. -->
-
-**How did AI help you brainstorm or implement it?**
-
-<!-- Describe the conversation or suggestions that led to your decision -->
-
-**How does the pattern appear in your final code?**
-
-<!-- Point to the relevant class or method -->
