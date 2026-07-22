@@ -1,5 +1,6 @@
 groq
 pandas
+python-dotenv
 pytest
 streamlit
 tabulate

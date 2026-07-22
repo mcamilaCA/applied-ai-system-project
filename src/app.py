@@ -12,11 +12,13 @@ Run with:
 import os
 
 import streamlit as st
+from dotenv import load_dotenv
 
 from recommender import recommend_songs
 from planner import PlanningError, configure_logging
 from rag import KnowledgeBase, LLMClient, RAGEngine
 
+load_dotenv()
 configure_logging()
 
 DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "songs.csv")

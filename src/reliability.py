@@ -31,6 +31,8 @@ import re
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional
 
+from dotenv import load_dotenv
+
 try:
     from recommender import load_songs, recommend_songs, score_song
     from planner import PlanningError
@@ -39,6 +41,8 @@ except ImportError:
     from src.recommender import load_songs, recommend_songs, score_song
     from src.planner import PlanningError
     from src.rag import KnowledgeBase, LLMClient, RAGEngine
+
+load_dotenv()
 
 SONGS_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "songs.csv")
 EVAL_CASES_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "eval_cases.json")

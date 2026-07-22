@@ -11,12 +11,14 @@ You will implement the functions in recommender.py:
 
 import os
 
+from dotenv import load_dotenv
 from tabulate import tabulate
 
 from recommender import UserProfile, load_songs, recommend_songs
 from planner import PlanningError, configure_logging
 from rag import KnowledgeBase, LLMClient, RAGEngine
 
+load_dotenv()
 
 MEDALS = {1: "🥇", 2: "🥈", 3: "🥉"}
 NOTICE_ICONS = {"warning": "⚠️", "info": "ℹ️"}

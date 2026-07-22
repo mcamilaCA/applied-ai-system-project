@@ -117,6 +117,7 @@ class LLMClient:
         response = client.chat.completions.create(
             model=self.model,
             max_tokens=max_tokens,
+            reasoning_effort="low",
             messages=[{"role": "user", "content": prompt}],
         )
         return response.choices[0].message.content
