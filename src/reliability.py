@@ -36,11 +36,11 @@ from dotenv import load_dotenv
 try:
     from recommender import load_songs, recommend_songs, score_song
     from planner import PlanningError
-    from rag import KnowledgeBase, LLMClient, RAGEngine
+    from rag import KnowledgeBase, LLMClient, RAGEngine, STOPWORDS
 except ImportError:
     from src.recommender import load_songs, recommend_songs, score_song
     from src.planner import PlanningError
-    from src.rag import KnowledgeBase, LLMClient, RAGEngine
+    from src.rag import KnowledgeBase, LLMClient, RAGEngine, STOPWORDS
 
 load_dotenv()
 
@@ -49,12 +49,10 @@ EVAL_CASES_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "eval_ca
 REPORT_PATH = os.path.join(os.path.dirname(__file__), "..", "logs", "reliability_report.md")
 
 _WORD_RE = re.compile(r"[a-z0-9]+")
-_STOPWORDS = {
-    "the", "a", "an", "is", "are", "was", "were", "this", "that", "it", "to",
-    "of", "in", "on", "for", "and", "or", "but", "your", "you", "with", "as",
-    "by", "be", "has", "have", "had", "its", "from", "at", "so", "not", "no",
-    "do", "does", "will", "than",
-}
+# Shared with rag.py's KnowledgeBase.retrieve so the "what counts as generic
+# filler" definition can't drift between retrieval ranking and this
+# groundedness check.
+_STOPWORDS = STOPWORDS
 
 
 def _tokenize(text: str) -> List[str]:
@@ -125,7 +123,15 @@ class ConsistencyChecker:
 
     def measure(self, fn: Callable[[Any], Any], input: Any, runs: int = 3, key: Optional[str] = None) -> float:
         outputs = [fn(input) for _ in range(runs)]
+        return self.measure_outputs(outputs, key=key)
 
+    def measure_outputs(self, outputs: List[Any], key: Optional[str] = None) -> float:
+        """
+        Same agreement scoring as `measure`, but over outputs the caller already
+        generated -- lets a caller that needs multiple samples for another
+        reason (e.g. averaging groundedness) reuse those same LLM calls
+        instead of paying for a second, separate batch just for consistency.
+        """
         if key is not None:
             values = [output.get(key) if isinstance(output, dict) else None for output in outputs]
             if not values:
@@ -187,7 +193,14 @@ class ReliabilityHarness:
         cases = [EvalCase(**case) for case in raw_cases]
         songs = load_songs(songs_path)
         if rag_engine is None:
-            rag_engine = RAGEngine(knowledge_base=KnowledgeBase.load(), llm_client=LLMClient())
+            catalog_genres = {song["genre"] for song in songs if song.get("genre")}
+            catalog_moods = {song["mood"] for song in songs if song.get("mood")}
+            rag_engine = RAGEngine(
+                knowledge_base=KnowledgeBase.load(),
+                llm_client=LLMClient(),
+                catalog_genres=catalog_genres,
+                catalog_moods=catalog_moods,
+            )
         return cls(cases=cases, songs=songs, rag_engine=rag_engine, consistency_runs=consistency_runs)
 
     def run_all(self) -> EvalReport:
@@ -253,24 +266,41 @@ class ReliabilityHarness:
         _, reasons = score_song(case.input["user_prefs"], song)
         reasons_text = "\n".join(reasons)
 
+        # Generate consistency_runs samples up front and reuse them for both
+        # groundedness and consistency, instead of scoring groundedness off a
+        # single generation: one LLM call is a noisy estimate (the model's
+        # phrasing varies run to run), so a single low/high score doesn't
+        # reliably indicate the underlying grounding quality changed.
         try:
-            explanation = self.rag_engine.explain_with_context(song["title"], song["artist"], reasons_text)
+            explanations = [
+                self.rag_engine.explain_with_context(song["title"], song["artist"], reasons_text)
+                for _ in range(self.consistency_runs)
+            ]
         except (RuntimeError, ValueError) as error:
             return EvalResult(case_id=case.id, kind=case.kind, passed=False, actual=None, notes=str(error))
 
-        source_docs_text = "\n".join(
-            doc.text for doc in self.rag_engine.knowledge_base.documents if doc.id in explanation.sources
-        )
-        groundedness = self.groundedness_checker.check(explanation.text, reasons_text + "\n" + source_docs_text)
+        groundedness_scores = []
+        all_sources = []
+        for explanation in explanations:
+            source_docs_text = "\n".join(
+                doc.text for doc in self.rag_engine.knowledge_base.documents if doc.id in explanation.sources
+            )
+            # Naming the recommended song/artist is a trivially true, expected part of
+            # the explanation, not a claim that needs to trace back to retrieved
+            # context -- without this, "we picked <title>" always counts as
+            # ungrounded just because the title itself isn't in reasons_text/docs.
+            context_text = f"{song['title']}\n{song['artist']}\n{reasons_text}\n{source_docs_text}"
+            groundedness_scores.append(self.groundedness_checker.check(explanation.text, context_text))
+            all_sources.extend(explanation.sources)
+
+        groundedness = sum(groundedness_scores) / len(groundedness_scores)
         passed = groundedness >= case.expected.get("min_groundedness", 0.5)
-        consistency = self.consistency_checker.measure(
-            lambda _: self.rag_engine.explain_with_context(song["title"], song["artist"], reasons_text).text,
-            None,
-            runs=self.consistency_runs,
-        )
+        consistency = self.consistency_checker.measure_outputs([e.text for e in explanations])
+
         return EvalResult(
-            case_id=case.id, kind=case.kind, passed=passed, actual=explanation.text,
-            notes=f"grounded on {', '.join(explanation.sources) or 'no docs'}",
+            case_id=case.id, kind=case.kind, passed=passed, actual=explanations[0].text,
+            notes=f"grounded on {', '.join(sorted(set(all_sources))) or 'no docs'} "
+                  f"(groundedness avg over {len(explanations)} runs)",
             consistency=consistency, groundedness=groundedness,
         )
 

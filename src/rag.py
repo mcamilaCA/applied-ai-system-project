@@ -22,7 +22,7 @@ import json
 import os
 import re
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional, Set
 
 DEFAULT_MODEL = "openai/gpt-oss-20b"
 
@@ -30,9 +30,25 @@ KNOWLEDGE_BASE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "kno
 
 _WORD_RE = re.compile(r"[a-z0-9]+")
 
+# Filtered out of retrieval/groundedness token overlap so generic scaffolding
+# words (e.g. the "similarity ... vs target ..." boilerplate in a score
+# breakdown) can't outweigh the actually distinctive terms (genre/mood names)
+# when ranking documents by overlap count.
+STOPWORDS = {
+    "the", "a", "an", "is", "are", "was", "were", "this", "that", "it", "to",
+    "of", "in", "on", "for", "and", "or", "but", "your", "you", "with", "as",
+    "by", "be", "has", "have", "had", "its", "from", "at", "so", "not", "no",
+    "do", "does", "will", "than",
+}
+
 
 def _tokenize(text: str) -> List[str]:
     return _WORD_RE.findall(text.lower())
+
+
+def _significant_tokens(text: str) -> Set[str]:
+    """Tokenizes and drops stopwords/pure-digit tokens (e.g. score fragments like "0.80")."""
+    return {t for t in _tokenize(text) if t not in STOPWORDS and not t.isdigit()}
 
 
 @dataclass
@@ -66,14 +82,20 @@ class KnowledgeBase:
         Returns up to k documents ranked by token overlap with `query`.
         Documents with zero overlapping tokens are excluded rather than
         padding the result with irrelevant docs.
+
+        Stopwords and pure-digit tokens are excluded from the overlap count
+        (see `_significant_tokens`) so a query built from a score breakdown
+        (lots of "the"/"vs"/"0.80"-style filler) doesn't let an irrelevant
+        doc that happens to share that filler outrank the doc that actually
+        shares the distinctive genre/mood term.
         """
-        query_tokens = set(_tokenize(query))
+        query_tokens = _significant_tokens(query)
         if not query_tokens:
             return []
 
         scored = []
         for doc in self.documents:
-            doc_tokens = set(_tokenize(doc.text)) | set(_tokenize(" ".join(doc.tags)))
+            doc_tokens = _significant_tokens(doc.text) | _significant_tokens(" ".join(doc.tags))
             overlap = len(query_tokens & doc_tokens)
             if overlap:
                 scored.append((overlap, doc))
@@ -166,17 +188,40 @@ _PROFILE_FIELDS_NOTE = (
 
 
 class RAGEngine:
-    def __init__(self, knowledge_base: KnowledgeBase, llm_client: LLMClient):
+    def __init__(
+        self,
+        knowledge_base: KnowledgeBase,
+        llm_client: LLMClient,
+        catalog_genres: Optional[Set[str]] = None,
+        catalog_moods: Optional[Set[str]] = None,
+    ):
         self.knowledge_base = knowledge_base
         self.llm_client = llm_client
+        # Sorted so the prompt is stable across runs. Optional so existing
+        # callers/tests that only care about knowledge_base/llm_client don't
+        # need to change; without these, the LLM falls back to guessing
+        # casing/spelling for genre and mood.
+        self.catalog_genres = sorted(catalog_genres) if catalog_genres else []
+        self.catalog_moods = sorted(catalog_moods) if catalog_moods else []
 
     def parse_taste_query(self, nl_query: str, k: int = 4) -> ParsedTasteResult:
         docs = self.knowledge_base.retrieve(nl_query, k=k)
         context = "\n".join(f"- {doc.text}" for doc in docs) or "(no matching reference docs found)"
+        vocab_lines = []
+        if self.catalog_genres:
+            vocab_lines.append(
+                f"genre must be EXACTLY one of these catalog strings (matching case): {self.catalog_genres}"
+            )
+        if self.catalog_moods:
+            vocab_lines.append(
+                f"mood must be EXACTLY one of these catalog strings (matching case): {self.catalog_moods}"
+            )
+        vocab_note = ("\n".join(vocab_lines) + "\n\n") if vocab_lines else ""
         prompt = (
             "You are translating a listener's free-text music taste description into a "
             "structured preferences JSON object for a recommender system.\n\n"
             f"Reference vocabulary (use this to interpret words like \"upbeat\" or \"retro\"):\n{context}\n\n"
+            f"{vocab_note}"
             f"{_PROFILE_FIELDS_NOTE}\n\n"
             "Respond with ONLY the JSON object, no other text.\n\n"
             f"Listener's description: {nl_query!r}"

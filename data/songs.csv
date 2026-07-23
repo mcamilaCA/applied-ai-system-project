@@ -1,19 +1,601 @@
 id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness,popularity,release_decade,mood_tags,explicit_content,instrumentalness
-1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18,78,2020s,uplifting|energetic|bright,False,0.03
-2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71,54,2020s,cozy|focused|nostalgic,False,0.82
-3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10,61,2000s,aggressive|adrenaline|driving,False,0.08
-4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86,39,2020s,cozy|melancholic|soothing,False,0.88
-5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05,82,2020s,pumped|energetic|triumphant,False,0.02
-6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92,28,2010s,dreamy|introspective|weightless,False,0.91
-7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89,33,1990s,warm|nostalgic|intimate,False,0.35
-8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22,57,2010s,brooding|cinematic|nocturnal,False,0.58
-9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78,45,2020s,focused|steady|meditative,False,0.85
-10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35,69,2010s,carefree|sunny|social,False,0.04
-11,Golden Hour Memories,Amber Fields,folk,nostalgic,0.45,95,0.68,0.50,0.83,42,1990s,nostalgic|bittersweet|wistful,False,0.12
-12,Crimson Fury,Blackout Sirens,metal,angry,0.97,168,0.25,0.45,0.03,51,2000s,aggressive|rebellious|explosive,True,0.06
-13,Velvet Whisper,Marina Soul,R&B,romantic,0.55,88,0.72,0.68,0.30,64,2000s,sensual|intimate|smooth,False,0.05
-14,Neon Pulse Rising,Circuit Bloom,EDM,euphoric,0.95,128,0.90,0.92,0.02,88,2010s,euphoric|triumphant|electric,False,0.35
-15,Dust Road Home,Copper Wagon,country,nostalgic,0.50,100,0.60,0.55,0.65,47,1990s,nostalgic|homesick|earthy,False,0.05
-16,Concrete Sermon,MC Vantage,hip-hop,confident,0.80,92,0.65,0.85,0.08,73,2010s,confident|gritty|assertive,True,0.03
-17,Floating in Silence,Aria Wren,classical,peaceful,0.20,55,0.55,0.15,0.95,24,1980s,serene|meditative|ethereal,False,0.97
-18,Island Drift,Solar Tide,reggae,carefree,0.60,85,0.80,0.75,0.40,58,2000s,carefree|breezy|sun-soaked,False,0.10
+1,Blinding Lights,The Weeknd,pop,happy,0.8,96,0.82,0.69,0.07,95,2020s,uplifting|catchy|bright,False,0.01
+2,Shape of You,Ed Sheeran,pop,euphoric,0.77,132,0.71,0.63,0.09,89,2010s,glossy|radio-ready|sunny,False,0.03
+3,Uptown Funk,Mark Ronson ft. Bruno Mars,pop,carefree,0.66,129,0.71,0.75,0.11,93,2010s,feel-good|anthemic|warm,False,0.04
+4,Rolling in the Deep,Adele,pop,romantic,0.65,122,0.68,0.66,0.29,86,2010s,sleek|polished|danceable,False,0.02
+5,Levitating,Dua Lipa,pop,happy,0.63,117,0.77,0.85,0.23,91,2020s,uplifting|catchy|bright,False,0.03
+6,Watermelon Sugar,Harry Styles,pop,euphoric,0.72,130,0.66,0.8,0.27,83,2010s,glossy|radio-ready|sunny,False,0.02
+7,Bad Guy,Billie Eilish,pop,carefree,0.62,109,0.84,0.9,0.26,83,2010s,feel-good|anthemic|warm,False,0.04
+8,Anti-Hero,Taylor Swift,pop,romantic,0.75,118,0.61,0.72,0.21,84,2020s,sleek|polished|danceable,False,0.04
+9,Firework,Katy Perry,pop,happy,0.62,105,0.75,0.69,0.15,84,2010s,uplifting|catchy|bright,False,0.01
+10,Someone Like You,Adele,pop,euphoric,0.82,109,0.8,0.86,0.24,75,2010s,glossy|radio-ready|sunny,False,0.01
+11,Can't Stop the Feeling!,Justin Timberlake,pop,carefree,0.7,112,0.57,0.88,0.18,74,2010s,feel-good|anthemic|warm,False,0.04
+12,Roar,Katy Perry,pop,romantic,0.76,124,0.6,0.66,0.23,77,2010s,sleek|polished|danceable,False,0.03
+13,Sunflower,Post Malone & Swae Lee,pop,happy,0.74,132,0.7,0.68,0.3,70,2010s,uplifting|catchy|bright,False,0.03
+14,Perfect,Ed Sheeran,pop,euphoric,0.62,102,0.61,0.66,0.21,70,2010s,glossy|radio-ready|sunny,False,0.03
+15,As It Was,Harry Styles,pop,carefree,0.79,124,0.75,0.89,0.26,71,2020s,feel-good|anthemic|warm,False,0.0
+16,Just the Way You Are,Bruno Mars,pop,romantic,0.82,129,0.83,0.84,0.12,65,2010s,sleek|polished|danceable,False,0.01
+17,Havana,Camila Cabello,pop,happy,0.6,111,0.91,0.83,0.17,67,2010s,uplifting|catchy|bright,False,0.01
+18,Payphone,Maroon 5,pop,euphoric,0.87,127,0.78,0.66,0.24,66,2010s,glossy|radio-ready|sunny,False,0.03
+19,Thinking Out Loud,Ed Sheeran,pop,carefree,0.77,95,0.77,0.76,0.06,66,2010s,feel-good|anthemic|warm,False,0.02
+20,Since U Been Gone,Kelly Clarkson,pop,romantic,0.86,110,0.57,0.87,0.29,60,2000s,sleek|polished|danceable,False,0.0
+21,Sicko Mode,Travis Scott,hip-hop,confident,0.57,138,0.62,0.71,0.11,92,2010s,gritty|assertive|street,True,0.02
+22,God's Plan,Drake,hip-hop,intense,0.84,124,0.71,0.91,0.16,94,2010s,braggadocious|hard-hitting|urban,False,0.02
+23,HUMBLE.,Kendrick Lamar,hip-hop,angry,0.68,117,0.48,0.81,0.04,89,2010s,confident|raw|punchy,True,0.01
+24,Lose Yourself,Eminem,hip-hop,moody,0.74,99,0.55,0.68,0.15,85,2000s,bold|rhythmic|sharp,True,0.0
+25,In Da Club,50 Cent,hip-hop,confident,0.56,112,0.33,0.74,0.14,83,2000s,gritty|assertive|street,True,0.01
+26,Empire State of Mind,Jay-Z ft. Alicia Keys,hip-hop,intense,0.86,143,0.54,0.74,0.11,81,2000s,braggadocious|hard-hitting|urban,False,0.01
+27,Hotline Bling,Drake,hip-hop,angry,0.77,115,0.48,0.8,0.15,87,2010s,confident|raw|punchy,False,0.02
+28,Started From the Bottom,Drake,hip-hop,moody,0.58,121,0.61,0.88,0.04,81,2010s,bold|rhythmic|sharp,True,0.01
+29,Alright,Kendrick Lamar,hip-hop,confident,0.6,93,0.42,0.74,0.19,82,2010s,gritty|assertive|street,True,0.01
+30,Money Trees,Kendrick Lamar,hip-hop,intense,0.73,76,0.57,0.82,0.02,79,2010s,braggadocious|hard-hitting|urban,True,0.0
+31,Stronger,Kanye West,hip-hop,angry,0.63,122,0.5,0.73,0.09,74,2000s,confident|raw|punchy,True,0.0
+32,Not Like Us,Kendrick Lamar,hip-hop,moody,0.88,103,0.69,0.88,0.07,75,2020s,bold|rhythmic|sharp,True,0.02
+33,Mask Off,Future,hip-hop,confident,0.81,132,0.37,0.75,0.19,72,2010s,gritty|assertive|street,True,0.02
+34,Bodak Yellow,Cardi B,hip-hop,intense,0.8,77,0.32,0.8,0.19,66,2010s,braggadocious|hard-hitting|urban,True,0.02
+35,Old Town Road,Lil Nas X,hip-hop,angry,0.72,93,0.33,0.7,0.18,71,2010s,confident|raw|punchy,False,0.01
+36,Life Is Good,Future ft. Drake,hip-hop,moody,0.74,144,0.55,0.83,0.1,66,2020s,bold|rhythmic|sharp,True,0.02
+37,Goosebumps,Travis Scott,hip-hop,confident,0.86,96,0.58,0.76,0.07,65,2010s,gritty|assertive|street,True,0.0
+38,No Role Modelz,J. Cole,hip-hop,intense,0.7,79,0.3,0.84,0.12,62,2010s,braggadocious|hard-hitting|urban,True,0.0
+39,XO Tour Llif3,Lil Uzi Vert,hip-hop,angry,0.72,86,0.69,0.9,0.18,58,2010s,confident|raw|punchy,True,0.01
+40,Nonstop,Drake,hip-hop,moody,0.83,108,0.56,0.93,0.14,61,2010s,bold|rhythmic|sharp,True,0.0
+41,Bohemian Rhapsody,Queen,rock,intense,0.77,147,0.33,0.59,0.07,93,1970s,driving|raw|electric,False,0.11
+42,Smells Like Teen Spirit,Nirvana,rock,angry,0.73,123,0.55,0.54,0.06,89,1990s,anthemic|powerful|riff-heavy,False,0.08
+43,Sweet Child O' Mine,Guns N' Roses,rock,moody,0.82,162,0.68,0.36,0.15,85,1980s,adrenaline|loud|rebellious,False,0.1
+44,Hotel California,Eagles,rock,confident,0.78,113,0.56,0.42,0.17,86,1970s,classic|guitar-driven|gritty,False,0.07
+45,Stairway to Heaven,Led Zeppelin,rock,intense,0.68,109,0.7,0.54,0.05,84,1970s,driving|raw|electric,False,0.0
+46,Livin' on a Prayer,Bon Jovi,rock,angry,0.84,132,0.34,0.43,0.2,86,1980s,anthemic|powerful|riff-heavy,False,0.1
+47,Back in Black,AC/DC,rock,moody,0.94,118,0.58,0.53,0.09,84,1980s,adrenaline|loud|rebellious,False,0.07
+48,Mr. Brightside,The Killers,rock,confident,0.96,152,0.35,0.6,0.19,81,2000s,classic|guitar-driven|gritty,False,0.12
+49,Seven Nation Army,The White Stripes,rock,intense,0.94,106,0.36,0.6,0.18,78,2000s,driving|raw|electric,False,0.05
+50,Under the Bridge,Red Hot Chili Peppers,rock,angry,0.89,120,0.4,0.56,0.04,78,1990s,anthemic|powerful|riff-heavy,False,0.1
+51,Come As You Are,Nirvana,rock,moody,0.74,157,0.68,0.44,0.18,71,1990s,adrenaline|loud|rebellious,False,0.1
+52,Wonderwall,Oasis,rock,confident,0.87,130,0.42,0.58,0.21,72,1990s,classic|guitar-driven|gritty,False,0.03
+53,Creep,Radiohead,rock,intense,0.8,158,0.52,0.6,0.04,66,1990s,driving|raw|electric,False,0.12
+54,Highway to Hell,AC/DC,rock,angry,0.96,121,0.3,0.51,0.09,66,1970s,anthemic|powerful|riff-heavy,False,0.09
+55,Boulevard of Broken Dreams,Green Day,rock,moody,0.97,112,0.45,0.51,0.07,61,2000s,adrenaline|loud|rebellious,False,0.09
+56,Numb,Linkin Park,rock,confident,0.95,139,0.58,0.6,0.17,62,2000s,classic|guitar-driven|gritty,False,0.02
+57,Time,Pink Floyd,rock,intense,0.96,163,0.43,0.43,0.19,59,1970s,driving|raw|electric,False,0.09
+58,Californication,Red Hot Chili Peppers,rock,angry,0.77,131,0.42,0.54,0.13,60,1990s,anthemic|powerful|riff-heavy,False,0.02
+59,November Rain,Guns N' Roses,rock,moody,0.79,152,0.68,0.52,0.08,55,1990s,adrenaline|loud|rebellious,False,0.07
+60,Africa,Toto,rock,confident,0.76,132,0.63,0.51,0.08,56,1980s,classic|guitar-driven|gritty,False,0.05
+61,Suavemente,Elvis Crespo,latin,carefree,0.77,98,0.8,0.78,0.23,85,1990s,sun-soaked|festive|rhythmic,False,0.03
+62,Vivir Mi Vida,Marc Anthony,latin,happy,0.91,103,0.81,0.77,0.1,84,2010s,tropical|warm|danceable,False,0.0
+63,Bailando,"Enrique Iglesias ft. Descemer Bueno, Gente de Zona",latin,romantic,0.76,92,0.73,0.91,0.2,83,2010s,passionate|vibrant|breezy,False,0.04
+64,La Bicicleta,Carlos Vives & Shakira,latin,euphoric,0.74,97,0.8,0.72,0.25,79,2010s,celebratory|romantic|upbeat,False,0.04
+65,Waka Waka (This Time for Africa),Shakira,latin,carefree,0.75,99,0.85,0.87,0.17,84,2010s,sun-soaked|festive|rhythmic,False,0.03
+66,Hips Don't Lie,Shakira ft. Wyclef Jean,latin,happy,0.66,96,0.85,0.86,0.32,82,2000s,tropical|warm|danceable,False,0.03
+67,Bailar,Deorro ft. Elvis Crespo,latin,romantic,0.89,127,0.86,0.91,0.16,76,2010s,passionate|vibrant|breezy,False,0.05
+68,Ojos Así,Shakira,latin,euphoric,0.67,118,0.73,0.88,0.28,77,1990s,celebratory|romantic|upbeat,False,0.01
+69,La Camisa Negra,Juanes,latin,carefree,0.77,103,0.67,0.74,0.12,71,2000s,sun-soaked|festive|rhythmic,False,0.01
+70,A Dios le Pido,Juanes,latin,happy,0.78,96,0.63,0.8,0.08,70,2000s,tropical|warm|danceable,False,0.01
+71,Danza Kuduro,Don Omar & Lucenzo,latin,romantic,0.72,117,0.72,0.76,0.16,70,2010s,passionate|vibrant|breezy,False,0.05
+72,El Perdón,Nicky Jam & Enrique Iglesias,latin,euphoric,0.83,124,0.71,0.72,0.14,70,2010s,celebratory|romantic|upbeat,False,0.04
+73,Corazón Sin Cara,Prince Royce,latin,carefree,0.91,114,0.76,0.87,0.26,65,2010s,sun-soaked|festive|rhythmic,False,0.04
+74,Volví,Aventura ft. Bad Bunny,latin,happy,0.7,119,0.59,0.79,0.23,61,2020s,tropical|warm|danceable,False,0.02
+75,Obsesión,Aventura,latin,romantic,0.76,96,0.91,0.83,0.29,63,2000s,passionate|vibrant|breezy,False,0.03
+76,Vivir Sin Aire,Maná,latin,euphoric,0.65,115,0.63,0.82,0.05,57,1990s,celebratory|romantic|upbeat,False,0.02
+77,Rayando el Sol,Maná,latin,carefree,0.72,112,0.67,0.92,0.16,57,1990s,sun-soaked|festive|rhythmic,False,0.04
+78,La Tortura,Shakira ft. Alejandro Sanz,latin,happy,0.84,91,0.92,0.79,0.22,57,2000s,tropical|warm|danceable,False,0.04
+79,Chantaje,Shakira ft. Maluma,latin,romantic,0.85,103,0.65,0.72,0.08,55,2010s,passionate|vibrant|breezy,False,0.01
+80,Vente Pa' Ca,Ricky Martin ft. Maluma,latin,euphoric,0.79,101,0.74,0.77,0.14,56,2010s,celebratory|romantic|upbeat,False,0.03
+81,Levels,Avicii,EDM,euphoric,0.94,123,0.9,0.77,0.0,92,2010s,euphoric|festival|electric,False,0.21
+82,Wake Me Up,Avicii,EDM,intense,0.98,130,0.89,0.79,0.03,88,2010s,pulsing|big-room|triumphant,False,0.39
+83,Titanium,David Guetta ft. Sia,EDM,happy,0.94,127,0.85,0.88,0.01,90,2010s,explosive|synth-driven|uplifting,False,0.44
+84,Animals,Martin Garrix,EDM,confident,0.88,131,0.77,0.76,0.03,86,2010s,climactic|energetic|glowing,False,0.1
+85,Clarity,Zedd ft. Foxes,EDM,euphoric,0.9,131,0.9,0.88,0.04,84,2010s,euphoric|festival|electric,False,0.35
+86,Don't You Worry Child,Swedish House Mafia,EDM,intense,0.94,138,0.6,0.92,0.03,82,2010s,pulsing|big-room|triumphant,False,0.27
+87,Faded,Alan Walker,EDM,happy,0.94,126,0.62,0.8,0.05,80,2010s,explosive|synth-driven|uplifting,False,0.2
+88,This Is What You Came For,Calvin Harris ft. Rihanna,EDM,confident,0.95,136,0.75,0.83,0.0,76,2010s,climactic|energetic|glowing,False,0.4
+89,Summer,Calvin Harris,EDM,euphoric,0.86,126,0.63,0.93,0.04,73,2010s,euphoric|festival|electric,False,0.2
+90,Tsunami,DVBBS & Borgeous,EDM,intense,0.98,120,0.59,0.84,0.03,74,2010s,pulsing|big-room|triumphant,False,0.18
+91,Reload,Sebastian Ingrosso & Tommy Trash,EDM,happy,0.94,132,0.83,0.77,0.01,71,2010s,explosive|synth-driven|uplifting,False,0.34
+92,Language,Porter Robinson,EDM,confident,0.92,133,0.72,0.82,0.05,69,2010s,climactic|energetic|glowing,False,0.29
+93,Strobe,Deadmau5,EDM,euphoric,0.9,127,0.59,0.78,0.01,69,2000s,euphoric|festival|electric,False,0.14
+94,Ghosts 'n' Stuff,Deadmau5 ft. Rob Swire,EDM,intense,0.95,123,0.56,0.91,0.01,69,2000s,pulsing|big-room|triumphant,False,0.31
+95,Turn Down for What,DJ Snake & Lil Jon,EDM,happy,0.92,121,0.85,0.81,0.02,66,2010s,explosive|synth-driven|uplifting,True,0.21
+96,Lean On,Major Lazer & DJ Snake ft. MØ,EDM,confident,0.84,119,0.91,0.87,0.03,66,2010s,climactic|energetic|glowing,False,0.14
+97,Silence,Marshmello ft. Khalid,EDM,euphoric,0.9,118,0.73,0.85,0.02,57,2010s,euphoric|festival|electric,False,0.16
+98,Alone,Marshmello,EDM,intense,0.98,133,0.53,0.76,0.02,60,2010s,pulsing|big-room|triumphant,False,0.3
+99,Some Chords,Deadmau5,EDM,happy,0.85,136,0.9,0.77,0.01,56,2000s,explosive|synth-driven|uplifting,False,0.3
+100,One (Your Name),Swedish House Mafia,EDM,confident,0.92,137,0.58,0.86,0.02,58,2010s,climactic|energetic|glowing,False,0.25
+101,I Will Always Love You,Whitney Houston,R&B,romantic,0.72,77,0.53,0.5,0.41,90,1990s,smooth|sensual|intimate,False,0.0
+102,Ain't No Sunshine,Bill Withers,R&B,moody,0.58,74,0.57,0.53,0.11,84,1970s,velvety|soulful|warm,False,0.0
+103,What's Going On,Marvin Gaye,R&B,relaxed,0.52,96,0.49,0.49,0.16,89,1970s,silky|emotive|late-night,False,0.01
+104,Respect,Aretha Franklin,R&B,chill,0.38,72,0.69,0.72,0.28,87,1960s,tender|groovy|heartfelt,False,0.03
+105,My Girl,The Temptations,R&B,romantic,0.51,92,0.38,0.52,0.15,78,1960s,smooth|sensual|intimate,False,0.01
+106,No Diggity,Blackstreet,R&B,moody,0.64,96,0.61,0.65,0.16,81,1990s,velvety|soulful|warm,False,0.01
+107,Crazy in Love,Beyoncé ft. Jay-Z,R&B,relaxed,0.61,75,0.5,0.63,0.08,77,2000s,silky|emotive|late-night,False,0.0
+108,Adorn,Miguel,R&B,chill,0.47,74,0.29,0.55,0.3,76,2010s,tender|groovy|heartfelt,False,0.04
+109,Best Part,Daniel Caesar ft. H.E.R.,R&B,romantic,0.36,106,0.58,0.56,0.06,73,2010s,smooth|sensual|intimate,False,0.04
+110,Earned It,The Weeknd,R&B,moody,0.59,75,0.36,0.66,0.28,68,2010s,velvety|soulful|warm,True,0.02
+111,No Scrubs,TLC,R&B,relaxed,0.48,79,0.42,0.51,0.11,69,1990s,silky|emotive|late-night,False,0.02
+112,Say My Name,Destiny's Child,R&B,chill,0.6,83,0.64,0.65,0.22,65,1990s,tender|groovy|heartfelt,False,0.02
+113,Killing Me Softly,Fugees,R&B,romantic,0.71,83,0.66,0.73,0.05,64,1990s,smooth|sensual|intimate,False,0.04
+114,Untitled (How Does It Feel),D'Angelo,R&B,moody,0.37,91,0.44,0.71,0.28,60,2000s,velvety|soulful|warm,True,0.04
+115,Redbone,Childish Gambino,R&B,relaxed,0.55,76,0.47,0.69,0.09,61,2010s,silky|emotive|late-night,False,0.05
+116,Location,Khalid,R&B,chill,0.44,68,0.42,0.48,0.2,61,2010s,tender|groovy|heartfelt,False,0.01
+117,Pyramids,Frank Ocean,R&B,romantic,0.39,65,0.56,0.53,0.4,58,2010s,smooth|sensual|intimate,True,0.01
+118,Thinkin Bout You,Frank Ocean,R&B,moody,0.5,88,0.71,0.55,0.25,58,2010s,velvety|soulful|warm,False,0.02
+119,Cranes in the Sky,Solange,R&B,relaxed,0.54,66,0.66,0.56,0.34,56,2010s,silky|emotive|late-night,False,0.02
+120,Deja Vu,Beyoncé ft. Jay-Z,R&B,chill,0.54,110,0.28,0.7,0.36,51,2000s,tender|groovy|heartfelt,False,0.03
+121,Dynamite,BTS,k-pop,confident,0.92,124,0.72,0.78,0.1,93,2020s,polished|energetic|catchy,False,0.02
+122,Butter,BTS,k-pop,happy,0.77,108,0.91,0.75,0.07,90,2020s,colorful|confident|synchronized,False,0.03
+123,DDU-DU DDU-DU,BLACKPINK,k-pop,euphoric,0.77,126,0.79,0.88,0.07,92,2010s,glossy|upbeat|dynamic,False,0.02
+124,Kill This Love,BLACKPINK,k-pop,carefree,0.95,127,0.9,0.73,0.16,84,2010s,bright|stylish|addictive,False,0.01
+125,Gangnam Style,PSY,k-pop,confident,0.92,102,0.71,0.8,0.12,86,2010s,polished|energetic|catchy,False,0.01
+126,How You Like That,BLACKPINK,k-pop,happy,0.72,126,0.82,0.76,0.11,80,2020s,colorful|confident|synchronized,False,0.01
+127,Fantastic Baby,BIGBANG,k-pop,euphoric,0.77,130,0.65,0.77,0.12,84,2010s,glossy|upbeat|dynamic,False,0.02
+128,Fire,BTS,k-pop,carefree,0.69,100,0.58,0.85,0.06,76,2010s,bright|stylish|addictive,False,0.01
+129,IDOL,BTS,k-pop,confident,0.95,102,0.68,0.85,0.15,79,2010s,polished|energetic|catchy,False,0.0
+130,Boy With Luv,BTS ft. Halsey,k-pop,happy,0.76,119,0.67,0.75,0.08,72,2010s,colorful|confident|synchronized,False,0.02
+131,Cheer Up,TWICE,k-pop,euphoric,0.73,120,0.75,0.75,0.15,73,2010s,glossy|upbeat|dynamic,False,0.0
+132,TT,TWICE,k-pop,carefree,0.75,112,0.77,0.9,0.09,71,2010s,bright|stylish|addictive,False,0.01
+133,Feel Special,TWICE,k-pop,confident,0.7,118,0.91,0.77,0.15,69,2010s,polished|energetic|catchy,False,0.02
+134,Growl,EXO,k-pop,happy,0.76,120,0.86,0.72,0.07,65,2010s,colorful|confident|synchronized,False,0.01
+135,Love Shot,EXO,k-pop,euphoric,0.88,97,0.91,0.84,0.06,66,2010s,glossy|upbeat|dynamic,False,0.02
+136,Psycho,Red Velvet,k-pop,carefree,0.89,99,0.88,0.86,0.14,65,2010s,bright|stylish|addictive,False,0.03
+137,Bad Boy,Red Velvet,k-pop,confident,0.74,118,0.58,0.74,0.06,63,2010s,polished|energetic|catchy,False,0.02
+138,Next Level,aespa,k-pop,happy,0.87,104,0.76,0.9,0.11,59,2020s,colorful|confident|synchronized,False,0.01
+139,Pink Venom,BLACKPINK,k-pop,euphoric,0.84,104,0.52,0.76,0.12,55,2020s,glossy|upbeat|dynamic,False,0.01
+140,Shut Down,BLACKPINK,k-pop,carefree,0.83,119,0.71,0.9,0.14,58,2020s,bright|stylish|addictive,False,0.01
+141,Friends in Low Places,Garth Brooks,country,nostalgic,0.59,129,0.51,0.65,0.63,82,1990s,earthy|homesick|heartfelt,False,0.02
+142,Before He Cheats,Carrie Underwood,country,happy,0.69,92,0.76,0.61,0.71,85,2000s,dusty|nostalgic|storytelling,False,0.05
+143,Cruise,Florida Georgia Line,country,romantic,0.55,128,0.55,0.49,0.33,83,2010s,porch-worn|sincere|rootsy,False,0.02
+144,Body Like a Back Road,Sam Hunt,country,moody,0.51,102,0.74,0.66,0.33,75,2010s,twangy|wistful|open-road,False,0.01
+145,Chicken Fried,Zac Brown Band,country,nostalgic,0.74,113,0.52,0.58,0.56,77,2000s,earthy|homesick|heartfelt,False,0.03
+146,Wagon Wheel,Darius Rucker,country,happy,0.67,119,0.56,0.46,0.7,75,2010s,dusty|nostalgic|storytelling,False,0.02
+147,Need You Now,Lady Antebellum,country,romantic,0.45,112,0.44,0.54,0.58,77,2010s,porch-worn|sincere|rootsy,False,0.04
+148,Jolene,Dolly Parton,country,moody,0.57,125,0.7,0.65,0.57,72,1970s,twangy|wistful|open-road,False,0.04
+149,Ring of Fire,Johnny Cash,country,nostalgic,0.76,95,0.39,0.52,0.48,72,1960s,earthy|homesick|heartfelt,False,0.05
+150,The Dance,Garth Brooks,country,happy,0.46,121,0.54,0.65,0.56,66,1990s,dusty|nostalgic|storytelling,False,0.0
+151,Achy Breaky Heart,Billy Ray Cyrus,country,romantic,0.77,132,0.74,0.44,0.37,69,1990s,porch-worn|sincere|rootsy,False,0.03
+152,Live Like You Were Dying,Tim McGraw,country,moody,0.44,99,0.49,0.45,0.53,66,2000s,twangy|wistful|open-road,False,0.0
+153,Springsteen,Eric Church,country,nostalgic,0.49,91,0.74,0.48,0.62,62,2010s,earthy|homesick|heartfelt,False,0.04
+154,Dirt Road Anthem,Jason Aldean,country,happy,0.52,87,0.81,0.56,0.63,63,2010s,dusty|nostalgic|storytelling,False,0.01
+155,Humble and Kind,Tim McGraw,country,romantic,0.47,100,0.73,0.48,0.42,54,2010s,porch-worn|sincere|rootsy,False,0.01
+156,Girl Crush,Little Big Town,country,moody,0.69,111,0.43,0.44,0.48,57,2010s,twangy|wistful|open-road,False,0.02
+157,Tennessee Whiskey,Chris Stapleton,country,nostalgic,0.58,92,0.8,0.43,0.62,54,2010s,earthy|homesick|heartfelt,False,0.04
+158,God's Country,Blake Shelton,country,happy,0.58,79,0.41,0.54,0.46,52,2010s,dusty|nostalgic|storytelling,False,0.03
+159,Fancy Like,Walker Hayes,country,romantic,0.75,82,0.78,0.5,0.35,51,2020s,porch-worn|sincere|rootsy,False,0.01
+160,Old Town Road (Remix),Lil Nas X ft. Billy Ray Cyrus,country,moody,0.63,123,0.52,0.68,0.51,49,2010s,twangy|wistful|open-road,False,0.02
+161,Essence,Wizkid ft. Tems,afrobeats,carefree,0.65,115,0.62,0.9,0.27,88,2020s,sun-soaked|groovy|celebratory,False,0.03
+162,Last Last,Burna Boy,afrobeats,confident,0.74,100,0.72,0.93,0.14,85,2020s,rhythmic|warm|dance-ready,False,0.04
+163,Ye,Burna Boy,afrobeats,happy,0.71,101,0.71,0.81,0.28,87,2010s,breezy|vibrant|infectious,False,0.0
+164,On the Low,Burna Boy,afrobeats,euphoric,0.65,96,0.83,0.85,0.07,86,2010s,percussive|joyful|laid-back,False,0.0
+165,Joro,Wizkid,afrobeats,carefree,0.78,114,0.62,0.84,0.21,83,2010s,sun-soaked|groovy|celebratory,False,0.04
+166,Ojuelegba,Wizkid,afrobeats,confident,0.82,102,0.78,0.84,0.19,80,2010s,rhythmic|warm|dance-ready,False,0.01
+167,If,Davido,afrobeats,happy,0.68,96,0.7,0.88,0.07,74,2010s,breezy|vibrant|infectious,False,0.01
+168,Fall,Davido,afrobeats,euphoric,0.74,110,0.91,0.93,0.2,71,2010s,percussive|joyful|laid-back,False,0.03
+169,Fem,Davido,afrobeats,carefree,0.88,115,0.67,0.81,0.22,72,2020s,sun-soaked|groovy|celebratory,False,0.02
+170,Soco,Wizkid ft. Terri & Spotless,afrobeats,confident,0.62,97,0.77,0.85,0.08,67,2010s,rhythmic|warm|dance-ready,False,0.03
+171,Sungba,Asake ft. Burna Boy,afrobeats,happy,0.83,99,0.71,0.86,0.08,68,2020s,breezy|vibrant|infectious,False,0.02
+172,Terminator,Asake,afrobeats,euphoric,0.88,112,0.61,0.79,0.08,69,2020s,percussive|joyful|laid-back,False,0.03
+173,Peru,Fireboy DML,afrobeats,carefree,0.7,114,0.72,0.89,0.15,65,2020s,sun-soaked|groovy|celebratory,False,0.01
+174,Calm Down,Rema,afrobeats,confident,0.72,96,0.68,0.9,0.17,60,2020s,rhythmic|warm|dance-ready,False,0.03
+175,Ku Lo Sa,Oxlade,afrobeats,happy,0.73,112,0.6,0.82,0.29,64,2020s,breezy|vibrant|infectious,False,0.04
+176,Attention,Omah Lay,afrobeats,euphoric,0.7,96,0.58,0.91,0.09,61,2020s,percussive|joyful|laid-back,False,0.02
+177,Bad Influence,Omah Lay,afrobeats,carefree,0.76,114,0.85,0.79,0.26,54,2020s,sun-soaked|groovy|celebratory,False,0.0
+178,Love Nwantiti,CKay,afrobeats,confident,0.88,103,0.78,0.88,0.22,53,2010s,rhythmic|warm|dance-ready,False,0.02
+179,Rush,Ayra Starr,afrobeats,happy,0.63,103,0.64,0.95,0.16,53,2020s,breezy|vibrant|infectious,False,0.03
+180,Commas,Rema,afrobeats,euphoric,0.74,96,0.66,0.89,0.18,52,2010s,percussive|joyful|laid-back,False,0.02
+181,Somebody That I Used to Know,Gotye ft. Kimbra,indie,nostalgic,0.51,109,0.62,0.4,0.37,78,2010s,wistful|lo-key|introspective,False,0.05
+182,Take Me Out,Franz Ferdinand,indie,moody,0.67,110,0.6,0.61,0.44,75,2000s,breezy|offbeat|earnest,False,0.02
+183,Skinny Love,Bon Iver,indie,chill,0.45,126,0.35,0.59,0.13,77,2000s,dreamy|understated|nostalgic,False,0.1
+184,Do I Wanna Know?,Arctic Monkeys,indie,relaxed,0.56,124,0.61,0.51,0.49,75,2010s,quirky|tender|reflective,False,0.06
+185,R U Mine?,Arctic Monkeys,indie,nostalgic,0.62,128,0.42,0.5,0.3,74,2010s,wistful|lo-key|introspective,False,0.06
+186,Riptide,Vance Joy,indie,moody,0.6,110,0.5,0.47,0.29,73,2010s,breezy|offbeat|earnest,False,0.01
+187,Pumped Up Kicks,Foster the People,indie,chill,0.41,142,0.32,0.55,0.26,72,2010s,dreamy|understated|nostalgic,False,0.06
+188,Ho Hey,The Lumineers,indie,relaxed,0.66,90,0.48,0.61,0.37,66,2010s,quirky|tender|reflective,False,0.03
+189,Little Talks,Of Monsters and Men,indie,nostalgic,0.44,91,0.48,0.61,0.45,61,2010s,wistful|lo-key|introspective,False,0.1
+190,Youth,Daughter,indie,moody,0.63,90,0.39,0.5,0.28,59,2010s,breezy|offbeat|earnest,False,0.05
+191,Electric Feel,MGMT,indie,chill,0.52,106,0.45,0.6,0.39,61,2000s,dreamy|understated|nostalgic,False,0.01
+192,Time to Pretend,MGMT,indie,relaxed,0.51,109,0.32,0.57,0.22,59,2000s,quirky|tender|reflective,False,0.07
+193,Two Weeks,FKA twigs,indie,nostalgic,0.72,97,0.43,0.54,0.16,60,2010s,wistful|lo-key|introspective,False,0.03
+194,Dog Days Are Over,Florence + the Machine,indie,moody,0.65,113,0.34,0.58,0.14,55,2000s,breezy|offbeat|earnest,False,0.06
+195,Shake It Out,Florence + the Machine,indie,chill,0.5,96,0.57,0.61,0.41,52,2010s,dreamy|understated|nostalgic,False,0.07
+196,Tongue Tied,Grouplove,indie,relaxed,0.63,115,0.5,0.39,0.23,49,2010s,quirky|tender|reflective,False,0.1
+197,Sedona,Houndmouth,indie,nostalgic,0.67,100,0.38,0.42,0.13,45,2010s,wistful|lo-key|introspective,False,0.08
+198,1901,Phoenix,indie,moody,0.67,141,0.61,0.53,0.38,47,2000s,breezy|offbeat|earnest,False,0.09
+199,Reptilia,The Strokes,indie,chill,0.61,97,0.35,0.61,0.42,42,2000s,dreamy|understated|nostalgic,False,0.08
+200,Last Nite,The Strokes,indie,relaxed,0.55,114,0.44,0.58,0.51,44,2000s,quirky|tender|reflective,False,0.06
+201,Despacito,Luis Fonsi ft. Daddy Yankee,reggaeton,confident,0.86,92,0.69,0.85,0.13,92,2010s,perreo|confident|sultry,False,0.01
+202,Gasolina,Daddy Yankee,reggaeton,carefree,0.74,99,0.66,0.85,0.07,92,2000s,club-ready|rhythmic|hot,False,0.02
+203,Con Calma,Daddy Yankee ft. Snow,reggaeton,euphoric,0.87,89,0.82,0.81,0.08,92,2010s,dembow|flirtatious|upbeat,False,0.01
+204,Dákiti,Bad Bunny ft. Jhay Cortez,reggaeton,romantic,0.84,101,0.81,0.85,0.12,89,2020s,urban|festive|magnetic,True,0.01
+205,Mi Gente,J Balvin & Willy William,reggaeton,confident,0.68,98,0.52,0.95,0.13,88,2010s,perreo|confident|sultry,False,0.03
+206,Tusa,Karol G ft. Nicki Minaj,reggaeton,carefree,0.76,97,0.68,0.84,0.15,78,2010s,club-ready|rhythmic|hot,True,0.01
+207,Safaera,"Bad Bunny, Jowell & Randy, Ñengo Flow",reggaeton,euphoric,0.9,95,0.79,0.82,0.06,82,2020s,dembow|flirtatious|upbeat,True,0.02
+208,Vete,Bad Bunny,reggaeton,romantic,0.68,100,0.65,0.8,0.03,81,2010s,urban|festive|magnetic,True,0.01
+209,Yo Perreo Sola,Bad Bunny,reggaeton,confident,0.79,101,0.65,0.92,0.05,74,2020s,perreo|confident|sultry,True,0.0
+210,Se Preparó,Ozuna,reggaeton,carefree,0.82,99,0.5,0.93,0.08,76,2010s,club-ready|rhythmic|hot,False,0.02
+211,Taki Taki,"DJ Snake ft. Selena Gomez, Ozuna, Cardi B",reggaeton,euphoric,0.8,89,0.59,0.8,0.07,70,2010s,dembow|flirtatious|upbeat,True,0.02
+212,Diles,Bad Bunny,reggaeton,romantic,0.83,101,0.86,0.81,0.09,74,2010s,urban|festive|magnetic,True,0.02
+213,Ella Quiere Beber,Anuel AA,reggaeton,confident,0.8,97,0.82,0.81,0.07,71,2010s,perreo|confident|sultry,True,0.01
+214,China,"Anuel AA, Daddy Yankee, Karol G, Ozuna, J Balvin",reggaeton,carefree,0.74,87,0.61,0.92,0.1,69,2010s,club-ready|rhythmic|hot,True,0.02
+215,La Modelo,Ozuna ft. Cardi B,reggaeton,euphoric,0.73,86,0.62,0.85,0.1,66,2010s,dembow|flirtatious|upbeat,True,0.02
+216,Bichota,Karol G,reggaeton,romantic,0.91,100,0.73,0.93,0.03,62,2020s,urban|festive|magnetic,True,0.02
+217,Ay Vamos,J Balvin,reggaeton,confident,0.72,86,0.79,0.94,0.06,60,2010s,perreo|confident|sultry,False,0.01
+218,Sin Pijama,Becky G & Natti Natasha,reggaeton,carefree,0.87,100,0.58,0.92,0.04,61,2010s,club-ready|rhythmic|hot,False,0.01
+219,Provenza,Karol G,reggaeton,euphoric,0.88,95,0.59,0.93,0.08,56,2020s,dembow|flirtatious|upbeat,False,0.01
+220,Ginza,J Balvin,reggaeton,romantic,0.91,95,0.86,0.88,0.08,55,2010s,urban|festive|magnetic,False,0.03
+221,Take Five,Dave Brubeck,jazz,relaxed,0.48,112,0.31,0.47,0.85,71,1950s,smoky|intimate|improvisational,False,0.63
+222,So What,Miles Davis,jazz,romantic,0.21,142,0.41,0.42,0.8,69,1950s,warm|late-night|sophisticated,False,0.4
+223,My Favorite Things,John Coltrane,jazz,nostalgic,0.35,103,0.55,0.42,0.77,64,1960s,swinging|moody|timeless,False,0.77
+224,Take the A Train,Duke Ellington,jazz,chill,0.43,109,0.44,0.54,0.79,63,1940s,mellow|expressive|classic,False,0.87
+225,Fly Me to the Moon,Frank Sinatra,jazz,relaxed,0.4,114,0.3,0.3,0.83,62,1960s,smoky|intimate|improvisational,False,0.52
+226,What a Wonderful World,Louis Armstrong,jazz,romantic,0.39,135,0.35,0.42,0.66,58,1960s,warm|late-night|sophisticated,False,0.57
+227,Feeling Good,Nina Simone,jazz,nostalgic,0.23,104,0.46,0.49,0.6,61,1960s,swinging|moody|timeless,False,0.37
+228,Blue in Green,Miles Davis,jazz,chill,0.36,107,0.68,0.32,0.83,54,1950s,mellow|expressive|classic,False,0.72
+229,Round Midnight,Thelonious Monk,jazz,relaxed,0.41,146,0.68,0.44,0.55,54,1950s,smoky|intimate|improvisational,False,0.81
+230,A Night in Tunisia,Dizzy Gillespie,jazz,romantic,0.51,114,0.72,0.54,0.91,53,1940s,warm|late-night|sophisticated,False,0.89
+231,All Blues,Miles Davis,jazz,nostalgic,0.44,128,0.52,0.57,0.86,53,1950s,swinging|moody|timeless,False,0.73
+232,Autumn Leaves,Cannonball Adderley,jazz,chill,0.42,104,0.5,0.32,0.58,50,1950s,mellow|expressive|classic,False,0.38
+233,Summertime,Ella Fitzgerald & Louis Armstrong,jazz,relaxed,0.19,128,0.53,0.43,0.91,49,1950s,smoky|intimate|improvisational,False,0.38
+234,Cantaloupe Island,Herbie Hancock,jazz,romantic,0.2,108,0.72,0.51,0.72,46,1960s,warm|late-night|sophisticated,False,0.76
+235,Watermelon Man,Herbie Hancock,jazz,nostalgic,0.21,98,0.56,0.42,0.79,44,1960s,swinging|moody|timeless,False,0.51
+236,St. Thomas,Sonny Rollins,jazz,chill,0.47,139,0.54,0.53,0.55,42,1950s,mellow|expressive|classic,False,0.6
+237,"Mercy, Mercy, Mercy",Cannonball Adderley,jazz,relaxed,0.49,124,0.35,0.33,0.64,35,1960s,smoky|intimate|improvisational,False,0.73
+238,Blue Rondo à la Turk,Dave Brubeck,jazz,romantic,0.53,94,0.65,0.36,0.77,31,1950s,warm|late-night|sophisticated,False,0.63
+239,Giant Steps,John Coltrane,jazz,nostalgic,0.29,126,0.32,0.49,0.75,30,1960s,swinging|moody|timeless,False,0.65
+240,Chameleon,Herbie Hancock,jazz,chill,0.41,135,0.43,0.58,0.52,30,1970s,mellow|expressive|classic,False,0.82
+241,Symphony No. 5,Ludwig van Beethoven,classical,peaceful,0.48,121,0.32,0.13,0.93,66,1800s,ethereal|timeless|majestic,False,0.94
+242,Clair de Lune,Claude Debussy,classical,nostalgic,0.45,117,0.33,0.29,0.92,69,1900s,serene|meditative|grand,False,0.96
+243,Canon in D,Johann Pachelbel,classical,moody,0.2,57,0.54,0.11,0.91,64,1680s,elegant|sweeping|refined,False,0.92
+244,The Four Seasons: Spring,Antonio Vivaldi,classical,relaxed,0.14,139,0.35,0.3,0.9,65,1720s,stately|delicate|orchestral,False,0.91
+245,Für Elise,Ludwig van Beethoven,classical,peaceful,0.3,61,0.35,0.18,0.89,57,1810s,ethereal|timeless|majestic,False,0.88
+246,Moonlight Sonata,Ludwig van Beethoven,classical,nostalgic,0.2,97,0.63,0.17,0.98,61,1800s,serene|meditative|grand,False,0.98
+247,Eine kleine Nachtmusik,Wolfgang Amadeus Mozart,classical,moody,0.47,140,0.34,0.25,0.92,56,1780s,elegant|sweeping|refined,False,0.92
+248,Symphony No. 9 (Ode to Joy),Ludwig van Beethoven,classical,relaxed,0.21,50,0.23,0.17,0.91,54,1820s,stately|delicate|orchestral,False,0.88
+249,Dance of the Sugar Plum Fairy,Pyotr Ilyich Tchaikovsky,classical,peaceful,0.1,84,0.44,0.27,0.94,51,1890s,ethereal|timeless|majestic,False,0.92
+250,Swan Lake,Pyotr Ilyich Tchaikovsky,classical,nostalgic,0.44,103,0.25,0.14,0.9,45,1870s,serene|meditative|grand,False,0.91
+251,Requiem: Lacrimosa,Wolfgang Amadeus Mozart,classical,moody,0.1,119,0.28,0.2,0.86,48,1790s,elegant|sweeping|refined,False,0.92
+252,Rhapsody in Blue,George Gershwin,classical,relaxed,0.2,127,0.53,0.11,0.99,46,1920s,stately|delicate|orchestral,False,0.91
+253,Boléro,Maurice Ravel,classical,peaceful,0.22,94,0.57,0.12,0.92,38,1920s,ethereal|timeless|majestic,False,0.92
+254,Air on the G String,Johann Sebastian Bach,classical,nostalgic,0.14,90,0.6,0.19,0.87,36,1710s,serene|meditative|grand,False,0.98
+255,Toccata and Fugue in D Minor,Johann Sebastian Bach,classical,moody,0.47,88,0.26,0.3,0.95,36,1700s,elegant|sweeping|refined,False,0.89
+256,Symphony No. 40,Wolfgang Amadeus Mozart,classical,relaxed,0.43,116,0.43,0.2,0.92,33,1780s,stately|delicate|orchestral,False,0.85
+257,Piano Concerto No. 21,Wolfgang Amadeus Mozart,classical,peaceful,0.13,101,0.48,0.26,0.95,28,1780s,ethereal|timeless|majestic,False,0.95
+258,Prelude in C Major,Johann Sebastian Bach,classical,nostalgic,0.28,131,0.59,0.25,0.93,30,1720s,serene|meditative|grand,False,0.95
+259,O Fortuna (Carmina Burana),Carl Orff,classical,moody,0.15,128,0.56,0.25,0.9,25,1930s,elegant|sweeping|refined,False,0.97
+260,Gymnopédie No. 1,Erik Satie,classical,relaxed,0.32,137,0.24,0.08,0.89,27,1880s,stately|delicate|orchestral,False,0.87
+261,Enter Sandman,Metallica,metal,angry,0.91,198,0.47,0.52,0.04,77,1990s,aggressive|crushing|explosive,False,0.01
+262,Master of Puppets,Metallica,metal,intense,0.88,161,0.5,0.41,0.02,77,1980s,dark|relentless|heavy,False,0.1
+263,Paranoid,Black Sabbath,metal,moody,0.92,189,0.25,0.49,0.04,77,1970s,furious|chaotic|intense,False,0.06
+264,Iron Man,Black Sabbath,metal,confident,0.94,144,0.48,0.36,0.01,77,1970s,thunderous|rebellious|brutal,False,0.09
+265,The Trooper,Iron Maiden,metal,angry,0.96,146,0.38,0.41,0.02,75,1980s,aggressive|crushing|explosive,False,0.06
+266,Run to the Hills,Iron Maiden,metal,intense,0.95,156,0.17,0.46,0.02,71,1980s,dark|relentless|heavy,False,0.1
+267,Duality,Slipknot,metal,moody,0.98,138,0.23,0.36,0.04,66,2000s,furious|chaotic|intense,True,0.03
+268,Psychosocial,Slipknot,metal,confident,0.89,181,0.2,0.5,0.01,63,2000s,thunderous|rebellious|brutal,True,0.06
+269,Chop Suey!,System of a Down,metal,angry,0.87,195,0.21,0.29,0.05,60,2000s,aggressive|crushing|explosive,False,0.02
+270,Toxicity,System of a Down,metal,intense,0.86,162,0.39,0.31,0.04,61,2000s,dark|relentless|heavy,False,0.0
+271,Bodies,Drowning Pool,metal,moody,0.98,172,0.37,0.52,0.02,60,2000s,furious|chaotic|intense,True,0.07
+272,Cochise,Audioslave,metal,confident,0.89,156,0.37,0.53,0.0,56,2000s,thunderous|rebellious|brutal,False,0.06
+273,Bring Me to Life,Evanescence,metal,angry,0.95,124,0.47,0.33,0.04,57,2000s,aggressive|crushing|explosive,False,0.02
+274,Before I Forget,Slipknot,metal,intense,0.99,170,0.42,0.33,0.04,50,2000s,dark|relentless|heavy,True,0.09
+275,Blackened,Metallica,metal,moody,0.86,158,0.34,0.31,0.05,53,1980s,furious|chaotic|intense,False,0.03
+276,Painkiller,Judas Priest,metal,confident,0.93,183,0.46,0.32,0.03,49,1990s,thunderous|rebellious|brutal,False,0.03
+277,Raining Blood,Slayer,metal,angry,0.9,178,0.37,0.47,0.0,43,1980s,aggressive|crushing|explosive,False,0.03
+278,Walk,Pantera,metal,intense,0.94,144,0.19,0.51,0.04,43,1990s,dark|relentless|heavy,True,0.08
+279,Cowboys from Hell,Pantera,metal,moody,0.86,205,0.16,0.55,0.02,38,1990s,furious|chaotic|intense,False,0.09
+280,Nothing Else Matters,Metallica,metal,confident,0.9,177,0.41,0.54,0.02,38,1990s,thunderous|rebellious|brutal,False,0.07
+281,The Sound of Silence,Simon & Garfunkel,folk,nostalgic,0.44,112,0.38,0.46,0.75,75,1960s,nostalgic|earthy|bittersweet,False,0.01
+282,Blowin' in the Wind,Bob Dylan,folk,peaceful,0.52,113,0.6,0.47,0.82,72,1960s,intimate|wistful|acoustic,False,0.08
+283,The Times They Are a-Changin',Bob Dylan,folk,moody,0.29,76,0.48,0.4,0.95,72,1960s,homespun|tender|reflective,False,0.03
+284,Fast Car,Tracy Chapman,folk,relaxed,0.52,116,0.51,0.46,0.66,71,1980s,timeless|gentle|storytelling,False,0.02
+285,Landslide,Fleetwood Mac,folk,nostalgic,0.51,73,0.5,0.42,0.71,63,1970s,nostalgic|earthy|bittersweet,False,0.07
+286,The Boxer,Simon & Garfunkel,folk,peaceful,0.49,100,0.36,0.42,0.64,64,1960s,intimate|wistful|acoustic,False,0.07
+287,Big Yellow Taxi,Joni Mitchell,folk,moody,0.44,113,0.52,0.3,0.77,62,1970s,homespun|tender|reflective,False,0.06
+288,Both Sides Now,Joni Mitchell,folk,relaxed,0.39,97,0.52,0.43,0.83,56,1960s,timeless|gentle|storytelling,False,0.02
+289,House of the Rising Sun,The Animals,folk,nostalgic,0.3,68,0.59,0.44,0.6,55,1960s,nostalgic|earthy|bittersweet,False,0.03
+290,Blackbird,The Beatles,folk,peaceful,0.55,72,0.69,0.41,0.69,53,1960s,intimate|wistful|acoustic,False,0.01
+291,Flowers in Your Hair,The Lumineers,folk,moody,0.43,114,0.55,0.39,0.95,57,2010s,homespun|tender|reflective,False,0.03
+292,Wagon Wheel,Old Crow Medicine Show,folk,relaxed,0.52,92,0.31,0.54,0.9,55,2000s,timeless|gentle|storytelling,False,0.01
+293,The Weight,The Band,folk,nostalgic,0.26,102,0.45,0.31,0.94,52,1960s,nostalgic|earthy|bittersweet,False,0.07
+294,Mr. Tambourine Man,The Byrds,folk,peaceful,0.54,97,0.56,0.43,0.78,46,1960s,intimate|wistful|acoustic,False,0.07
+295,Scarborough Fair,Simon & Garfunkel,folk,moody,0.33,85,0.36,0.52,0.86,47,1960s,homespun|tender|reflective,False,0.0
+296,Suzanne,Leonard Cohen,folk,relaxed,0.42,69,0.38,0.3,0.8,45,1960s,timeless|gentle|storytelling,False,0.04
+297,Hallelujah,Jeff Buckley,folk,nostalgic,0.51,83,0.59,0.39,0.67,44,1990s,nostalgic|earthy|bittersweet,False,0.02
+298,Ripple,Grateful Dead,folk,peaceful,0.24,100,0.7,0.34,0.92,40,1970s,intimate|wistful|acoustic,False,0.05
+299,Angel from Montgomery,John Prine,folk,moody,0.47,120,0.41,0.36,0.63,35,1970s,homespun|tender|reflective,False,0.05
+300,The Night They Drove Old Dixie Down,The Band,folk,relaxed,0.32,71,0.51,0.44,0.85,36,1960s,timeless|gentle|storytelling,False,0.01
+301,The Thrill Is Gone,B.B. King,blues,moody,0.49,64,0.54,0.58,0.58,71,1960s,soulful|gritty|raw,False,0.25
+302,Cross Road Blues,Robert Johnson,blues,nostalgic,0.43,77,0.29,0.37,0.53,68,1930s,mournful|smoky|heartfelt,False,0.11
+303,Sweet Home Chicago,Robert Johnson,blues,romantic,0.6,76,0.48,0.58,0.54,68,1930s,weathered|expressive|late-night,False,0.29
+304,Pride and Joy,Stevie Ray Vaughan,blues,relaxed,0.33,89,0.27,0.41,0.33,64,1980s,earthy|emotive|classic,False,0.16
+305,I'd Rather Go Blind,Etta James,blues,moody,0.48,82,0.2,0.43,0.55,60,1960s,soulful|gritty|raw,False,0.06
+306,At Last,Etta James,blues,nostalgic,0.58,85,0.36,0.56,0.44,57,1960s,mournful|smoky|heartfelt,False,0.29
+307,Boom Boom,John Lee Hooker,blues,romantic,0.63,73,0.46,0.53,0.68,60,1960s,weathered|expressive|late-night,False,0.22
+308,The Sky Is Crying,Stevie Ray Vaughan,blues,relaxed,0.43,88,0.38,0.54,0.46,55,1990s,earthy|emotive|classic,False,0.18
+309,Hoochie Coochie Man,Muddy Waters,blues,moody,0.38,121,0.35,0.54,0.6,53,1950s,soulful|gritty|raw,False,0.24
+310,Mannish Boy,Muddy Waters,blues,nostalgic,0.36,98,0.33,0.48,0.39,50,1950s,mournful|smoky|heartfelt,False,0.09
+311,Stormy Monday,T-Bone Walker,blues,romantic,0.63,111,0.29,0.37,0.4,48,1940s,weathered|expressive|late-night,False,0.19
+312,Killing Floor,Howlin' Wolf,blues,relaxed,0.48,101,0.28,0.55,0.71,48,1960s,earthy|emotive|classic,False,0.21
+313,Smokestack Lightning,Howlin' Wolf,blues,moody,0.34,103,0.24,0.52,0.51,46,1950s,soulful|gritty|raw,False,0.28
+314,Born Under a Bad Sign,Albert King,blues,nostalgic,0.52,65,0.37,0.55,0.33,40,1960s,mournful|smoky|heartfelt,False,0.25
+315,Statesboro Blues,Blind Willie McTell,blues,romantic,0.28,75,0.49,0.38,0.6,41,1920s,weathered|expressive|late-night,False,0.05
+316,Red House,Jimi Hendrix,blues,relaxed,0.42,119,0.42,0.32,0.52,35,1960s,earthy|emotive|classic,False,0.15
+317,Every Day I Have the Blues,B.B. King,blues,moody,0.55,94,0.19,0.55,0.58,40,1950s,soulful|gritty|raw,False,0.25
+318,Since I've Been Loving You,Led Zeppelin,blues,nostalgic,0.32,70,0.37,0.39,0.56,33,1970s,mournful|smoky|heartfelt,False,0.11
+319,Ain't No Love in the Heart of the City,"Bobby ""Blue"" Bland",blues,romantic,0.57,68,0.32,0.43,0.54,30,1970s,weathered|expressive|late-night,False,0.3
+320,Further On Up the Road,"Bobby ""Blue"" Bland",blues,relaxed,0.53,68,0.42,0.56,0.62,30,1950s,earthy|emotive|classic,False,0.07
+321,Oh Happy Day,Edwin Hawkins Singers,gospel,euphoric,0.66,75,0.76,0.6,0.17,72,1960s,uplifting|soulful|reverent,False,0.05
+322,Total Praise,Richard Smallwood,gospel,happy,0.57,80,0.87,0.67,0.22,71,1990s,joyful|powerful|spirited,False,0.05
+323,Take Me to the King,Tamela Mann,gospel,peaceful,0.67,102,0.5,0.4,0.47,68,2010s,heartfelt|triumphant|warm,False,0.05
+324,I Smile,Kirk Franklin,gospel,confident,0.43,108,0.49,0.45,0.19,68,2010s,soaring|hopeful|communal,False,0.05
+325,Stomp,Kirk Franklin,gospel,euphoric,0.83,106,0.55,0.46,0.44,66,1990s,uplifting|soulful|reverent,False,0.02
+326,Break Every Chain,Tasha Cobbs Leonard,gospel,happy,0.57,85,0.83,0.6,0.17,60,2010s,joyful|powerful|spirited,False,0.04
+327,Way Maker,Sinach,gospel,peaceful,0.46,97,0.85,0.49,0.42,58,2010s,heartfelt|triumphant|warm,False,0.06
+328,Goodness of God,CeCe Winans,gospel,confident,0.76,71,0.76,0.63,0.3,57,2010s,soaring|hopeful|communal,False,0.01
+329,"10,000 Reasons (Bless the Lord)",Matt Redman,gospel,euphoric,0.59,91,0.78,0.59,0.17,57,2010s,uplifting|soulful|reverent,False,0.04
+330,Amazing Grace (My Chains Are Gone),Chris Tomlin,gospel,happy,0.73,78,0.6,0.5,0.42,51,2000s,joyful|powerful|spirited,False,0.01
+331,I Won't Complain,Rev. Paul Jones,gospel,peaceful,0.58,79,0.48,0.48,0.27,47,1980s,heartfelt|triumphant|warm,False,0.02
+332,His Eye Is on the Sparrow,Whitney Houston,gospel,confident,0.5,125,0.73,0.54,0.18,48,1990s,soaring|hopeful|communal,False,0.01
+333,"Precious Lord, Take My Hand",Mahalia Jackson,gospel,euphoric,0.68,109,0.86,0.38,0.29,47,1950s,uplifting|soulful|reverent,False,0.05
+334,How Great Thou Art,Carrie Underwood,gospel,happy,0.67,99,0.73,0.43,0.28,42,2010s,joyful|powerful|spirited,False,0.01
+335,My Life Is in Your Hands,Kirk Franklin,gospel,peaceful,0.64,76,0.55,0.47,0.25,40,1990s,heartfelt|triumphant|warm,False,0.05
+336,Every Praise,Hezekiah Walker,gospel,confident,0.84,131,0.74,0.44,0.18,42,2010s,soaring|hopeful|communal,False,0.02
+337,You Are Great,William McDowell,gospel,euphoric,0.57,116,0.83,0.49,0.26,40,2010s,uplifting|soulful|reverent,False,0.05
+338,Order My Steps,GMWA Women of Worship,gospel,happy,0.85,85,0.61,0.57,0.39,32,1990s,joyful|powerful|spirited,False,0.03
+339,Great Is Thy Faithfulness,Fanny Crosby & Thomas Chisholm (trad.),gospel,peaceful,0.6,108,0.61,0.6,0.32,30,1920s,heartfelt|triumphant|warm,False,0.03
+340,Center of My Joy,Richard Smallwood,gospel,confident,0.59,118,0.64,0.68,0.21,30,1990s,soaring|hopeful|communal,False,0.06
+341,Blitzkrieg Bop,Ramones,punk,angry,0.95,141,0.68,0.49,0.07,78,1970s,rebellious|raw|fast,False,0.03
+342,I Wanna Be Sedated,Ramones,punk,intense,0.94,190,0.56,0.41,0.03,75,1970s,snotty|aggressive|DIY,False,0.02
+343,Anarchy in the U.K.,Sex Pistols,punk,confident,0.9,186,0.31,0.62,0.05,76,1970s,chaotic|defiant|loud,False,0.02
+344,God Save the Queen,Sex Pistols,punk,moody,0.97,191,0.51,0.57,0.04,74,1970s,anthemic|angsty|frantic,False,0.05
+345,Should I Stay or Should I Go,The Clash,punk,angry,0.93,148,0.33,0.44,0.07,72,1980s,rebellious|raw|fast,False,0.01
+346,London Calling,The Clash,punk,intense,0.92,189,0.69,0.46,0.08,66,1970s,snotty|aggressive|DIY,False,0.01
+347,Basket Case,Green Day,punk,confident,0.87,204,0.51,0.55,0.02,67,1990s,chaotic|defiant|loud,False,0.02
+348,American Idiot,Green Day,punk,moody,0.94,202,0.34,0.62,0.05,69,2000s,anthemic|angsty|frantic,False,0.02
+349,Holiday,Green Day,punk,angry,0.85,156,0.43,0.46,0.08,62,2000s,rebellious|raw|fast,False,0.03
+350,All the Small Things,blink-182,punk,intense,0.85,195,0.41,0.45,0.08,64,1990s,snotty|aggressive|DIY,False,0.01
+351,What's My Age Again?,blink-182,punk,confident,0.93,159,0.67,0.56,0.05,58,1990s,chaotic|defiant|loud,False,0.03
+352,Self Esteem,The Offspring,punk,moody,0.9,197,0.38,0.48,0.02,56,1990s,anthemic|angsty|frantic,False,0.04
+353,Come Out and Play,The Offspring,punk,angry,0.84,163,0.47,0.48,0.0,53,1990s,rebellious|raw|fast,False,0.01
+354,My Own Worst Enemy,Lit,punk,intense,0.94,146,0.52,0.57,0.05,50,1990s,snotty|aggressive|DIY,False,0.02
+355,Teenage Dirtbag,Wheatus,punk,confident,0.86,200,0.5,0.53,0.06,51,2000s,chaotic|defiant|loud,False,0.04
+356,Sk8er Boi,Avril Lavigne,punk,moody,0.89,196,0.54,0.58,0.07,49,2000s,anthemic|angsty|frantic,False,0.02
+357,Complicated,Avril Lavigne,punk,angry,0.85,155,0.41,0.44,0.01,43,2000s,rebellious|raw|fast,False,0.02
+358,Welcome to the Black Parade,My Chemical Romance,punk,intense,0.89,155,0.52,0.48,0.05,48,2000s,snotty|aggressive|DIY,False,0.03
+359,I'm Not Okay (I Promise),My Chemical Romance,punk,confident,0.97,160,0.51,0.5,0.01,42,2000s,chaotic|defiant|loud,False,0.02
+360,Fat Lip,Sum 41,punk,moody,0.85,183,0.68,0.5,0.02,40,2000s,anthemic|angsty|frantic,False,0.02
+361,Superstition,Stevie Wonder,funk,confident,0.79,106,0.77,0.84,0.26,77,1970s,groovy|danceable|upbeat,False,0.04
+362,Give Up the Funk (Tear the Roof off the Sucker),Parliament,funk,carefree,0.59,117,0.6,0.76,0.1,80,1970s,syncopated|strutting|brassy,False,0.02
+363,Flash Light,Parliament,funk,happy,0.76,117,0.8,0.87,0.07,78,1970s,slinky|infectious|rhythmic,False,0.01
+364,Play That Funky Music,Wild Cherry,funk,euphoric,0.84,104,0.72,0.91,0.24,71,1970s,bouncy|confident|electric,False,0.04
+365,Le Freak,Chic,funk,confident,0.72,116,0.82,0.91,0.12,71,1970s,groovy|danceable|upbeat,False,0.08
+366,Good Times,Chic,funk,carefree,0.69,119,0.55,0.93,0.07,67,1970s,syncopated|strutting|brassy,False,0.06
+367,Brick House,The Commodores,funk,happy,0.82,115,0.65,0.9,0.2,64,1970s,slinky|infectious|rhythmic,False,0.01
+368,Get Up (I Feel Like Being a) Sex Machine,James Brown,funk,euphoric,0.65,99,0.81,0.87,0.18,62,1970s,bouncy|confident|electric,False,0.05
+369,Papa's Got a Brand New Bag,James Brown,funk,confident,0.89,102,0.62,0.81,0.26,64,1960s,groovy|danceable|upbeat,False,0.08
+370,I Wanna Take You Higher,Sly and the Family Stone,funk,carefree,0.61,117,0.8,0.94,0.3,57,1960s,syncopated|strutting|brassy,False,0.07
+371,Everyday People,Sly and the Family Stone,funk,happy,0.86,100,0.57,0.82,0.1,57,1960s,slinky|infectious|rhythmic,False,0.07
+372,Higher Ground,Stevie Wonder,funk,euphoric,0.63,113,0.62,0.84,0.16,59,1970s,bouncy|confident|electric,False,0.05
+373,Cissy Strut,The Meters,funk,confident,0.61,109,0.79,0.9,0.27,53,1960s,groovy|danceable|upbeat,False,0.04
+374,Pick Up the Pieces,Average White Band,funk,carefree,0.77,120,0.8,0.9,0.23,53,1970s,syncopated|strutting|brassy,False,0.04
+375,September,"Earth, Wind & Fire",funk,happy,0.69,95,0.81,0.83,0.29,49,1970s,slinky|infectious|rhythmic,False,0.07
+376,Boogie Wonderland,"Earth, Wind & Fire",funk,euphoric,0.68,102,0.64,0.87,0.19,46,1970s,bouncy|confident|electric,False,0.04
+377,Bootylicious,Destiny's Child,funk,confident,0.8,94,0.54,0.88,0.26,48,2000s,groovy|danceable|upbeat,False,0.0
+378,Kiss,Prince,funk,carefree,0.63,107,0.52,0.95,0.09,39,1980s,syncopated|strutting|brassy,False,0.06
+379,1999,Prince,funk,happy,0.79,98,0.83,0.93,0.06,38,1980s,slinky|infectious|rhythmic,False,0.03
+380,It's Your Thing,The Isley Brothers,funk,euphoric,0.79,113,0.58,0.83,0.12,38,1960s,bouncy|confident|electric,False,0.06
+381,Feather,Nujabes,lofi,chill,0.35,84,0.38,0.43,0.42,62,2000s,cozy|nostalgic|hazy,False,0.75
+382,Luv(sic) Part 3,Nujabes ft. Shing02,lofi,relaxed,0.28,62,0.56,0.58,0.85,57,2000s,mellow|rainy-day|meditative,False,0.67
+383,Aruarian Dance,Nujabes,lofi,focused,0.17,74,0.38,0.57,0.43,56,2000s,dusty|warm|understated,False,0.64
+384,Reflection Eternal,Nujabes,lofi,nostalgic,0.26,88,0.58,0.41,0.86,56,2000s,soothing|reflective|calm,False,0.52
+385,Modal Soul,Nujabes,lofi,chill,0.15,82,0.4,0.46,0.48,58,2000s,cozy|nostalgic|hazy,False,0.83
+386,Workinonit,J Dilla,lofi,relaxed,0.33,76,0.61,0.4,0.43,53,2000s,mellow|rainy-day|meditative,False,0.83
+387,Time: The Donut of the Heart,J Dilla,lofi,focused,0.27,92,0.48,0.57,0.5,48,2000s,dusty|warm|understated,False,0.78
+388,Waves,J Dilla,lofi,nostalgic,0.33,85,0.53,0.57,0.71,50,2000s,soothing|reflective|calm,False,0.88
+389,Kemuri,DJ Krush,lofi,chill,0.24,78,0.53,0.43,0.57,49,1990s,cozy|nostalgic|hazy,False,0.78
+390,Nine Levels (Ye Ye),DJ Krush ft. CL Smooth,lofi,relaxed,0.39,69,0.5,0.41,0.62,45,1990s,mellow|rainy-day|meditative,False,0.75
+391,Shiki no Uta,Uyama Hiroto,lofi,focused,0.44,73,0.63,0.41,0.79,41,2000s,dusty|warm|understated,False,0.74
+392,Robots,Quasimoto (Madlib),lofi,nostalgic,0.35,86,0.49,0.62,0.42,37,2000s,soothing|reflective|calm,False,0.75
+393,Come On Feet,Quasimoto (Madlib),lofi,chill,0.21,91,0.37,0.57,0.62,39,2000s,cozy|nostalgic|hazy,False,0.77
+394,La La La,Nujabes,lofi,relaxed,0.27,84,0.47,0.53,0.64,33,2010s,mellow|rainy-day|meditative,False,0.53
+395,Sunset Sooner,Fat Jon,lofi,focused,0.17,91,0.41,0.57,0.64,36,2000s,dusty|warm|understated,False,0.65
+396,Cloud Nine,idealism & Sarcastic Sounds,lofi,nostalgic,0.4,83,0.54,0.45,0.59,31,2010s,soothing|reflective|calm,False,0.94
+397,Snow,Kupla,lofi,chill,0.22,91,0.48,0.49,0.67,33,2010s,cozy|nostalgic|hazy,False,0.61
+398,Homework,j'san,lofi,relaxed,0.37,65,0.35,0.41,0.39,28,2010s,mellow|rainy-day|meditative,False,0.7
+399,Petrichor,Philanthrope,lofi,focused,0.31,88,0.57,0.42,0.44,25,2010s,dusty|warm|understated,False,0.85
+400,Home,Philanthrope,lofi,nostalgic,0.42,86,0.62,0.46,0.59,25,2010s,soothing|reflective|calm,False,0.72
+401,Space Song,Beach House,dream pop,peaceful,0.59,92,0.48,0.44,0.2,62,2010s,hazy|dreamy|ethereal,False,0.26
+402,Myth,Beach House,dream pop,chill,0.33,94,0.62,0.48,0.23,59,2010s,shimmering|wistful|weightless,False,0.24
+403,Zebra,Beach House,dream pop,nostalgic,0.55,88,0.4,0.43,0.34,65,2010s,gauzy|tender|atmospheric,False,0.09
+404,Wildflower,Beach House,dream pop,romantic,0.55,114,0.39,0.38,0.56,62,2010s,floaty|nostalgic|soft-focus,False,0.13
+405,Fade Into You,Mazzy Star,dream pop,peaceful,0.46,95,0.49,0.53,0.26,61,1990s,hazy|dreamy|ethereal,False,0.25
+406,Heaven or Las Vegas,Cocteau Twins,dream pop,chill,0.59,92,0.61,0.52,0.5,52,1990s,shimmering|wistful|weightless,False,0.13
+407,Cherry-coloured Funk,Cocteau Twins,dream pop,nostalgic,0.43,111,0.39,0.45,0.31,53,1990s,gauzy|tender|atmospheric,False,0.21
+408,Iceblink Luck,Cocteau Twins,dream pop,romantic,0.47,119,0.65,0.5,0.49,54,1990s,floaty|nostalgic|soft-focus,False,0.19
+409,Alien Days,Alvvays,dream pop,peaceful,0.33,114,0.33,0.44,0.45,45,2010s,hazy|dreamy|ethereal,False,0.22
+410,"Archie, Marry Me",Alvvays,dream pop,chill,0.39,112,0.6,0.49,0.22,45,2010s,shimmering|wistful|weightless,False,0.18
+411,Video Games,Lana Del Rey,dream pop,nostalgic,0.44,91,0.64,0.35,0.3,43,2010s,gauzy|tender|atmospheric,False,0.06
+412,Born to Die,Lana Del Rey,dream pop,romantic,0.55,114,0.55,0.41,0.59,40,2010s,floaty|nostalgic|soft-focus,False,0.07
+413,Sway,The Perishers,dream pop,peaceful,0.32,113,0.34,0.45,0.36,40,2000s,hazy|dreamy|ethereal,False,0.29
+414,Dreams,The Cranberries,dream pop,chill,0.36,108,0.63,0.41,0.53,39,1990s,shimmering|wistful|weightless,False,0.13
+415,Linger,The Cranberries,dream pop,nostalgic,0.35,100,0.36,0.5,0.23,37,1990s,gauzy|tender|atmospheric,False,0.08
+416,Take Care,Beach House,dream pop,romantic,0.38,95,0.5,0.54,0.27,34,2010s,floaty|nostalgic|soft-focus,False,0.13
+417,On the Sea,Beach House,dream pop,peaceful,0.32,98,0.59,0.39,0.48,32,2000s,hazy|dreamy|ethereal,False,0.2
+418,How Long Have You Known,DIIV,dream pop,chill,0.55,97,0.35,0.38,0.33,33,2010s,shimmering|wistful|weightless,False,0.18
+419,Doused,DIIV,dream pop,nostalgic,0.36,99,0.33,0.41,0.37,28,2010s,gauzy|tender|atmospheric,False,0.24
+420,Silver Soul,Beach House,dream pop,romantic,0.43,96,0.36,0.33,0.51,28,2010s,floaty|nostalgic|soft-focus,False,0.11
+421,Nightcall,Kavinsky,synthwave,moody,0.66,93,0.51,0.58,0.13,62,2010s,neon|nocturnal|cinematic,False,0.31
+422,Odd Look,Kavinsky ft. Lovefoxxx,synthwave,nostalgic,0.83,116,0.59,0.54,0.13,60,2010s,retro-futuristic|driving|moody,False,0.64
+423,Sunset,The Midnight,synthwave,confident,0.84,91,0.38,0.66,0.13,57,2010s,nostalgic|electric|brooding,False,0.47
+424,Los Angeles,The Midnight,synthwave,intense,0.75,99,0.44,0.74,0.06,56,2010s,glowing|midnight|synthetic,False,0.49
+425,Endless Summer,The Midnight,synthwave,moody,0.73,103,0.53,0.64,0.13,54,2010s,neon|nocturnal|cinematic,False,0.5
+426,Kids,The Midnight,synthwave,nostalgic,0.65,114,0.39,0.73,0.09,58,2010s,retro-futuristic|driving|moody,False,0.56
+427,A Real Hero,College & Electric Youth,synthwave,confident,0.79,112,0.58,0.61,0.09,57,2010s,nostalgic|electric|brooding,False,0.5
+428,Tech Noir,Gunship,synthwave,intense,0.69,112,0.41,0.53,0.1,54,2010s,glowing|midnight|synthetic,False,0.31
+429,The Mountain,Gunship,synthwave,moody,0.62,118,0.49,0.7,0.15,46,2010s,neon|nocturnal|cinematic,False,0.71
+430,Fly For Your Life,Gunship,synthwave,nostalgic,0.74,105,0.5,0.71,0.12,51,2010s,retro-futuristic|driving|moody,False,0.62
+431,Turbo Killer,Carpenter Brut,synthwave,confident,0.72,112,0.44,0.72,0.13,46,2010s,nostalgic|electric|brooding,False,0.37
+432,Le Perv,Carpenter Brut,synthwave,intense,0.79,110,0.62,0.53,0.11,44,2010s,glowing|midnight|synthetic,False,0.7
+433,Journey,Timecop1983,synthwave,moody,0.71,100,0.6,0.71,0.15,39,2010s,neon|nocturnal|cinematic,False,0.53
+434,On the Run,Waveshaper,synthwave,nostalgic,0.53,91,0.4,0.57,0.09,43,2010s,retro-futuristic|driving|moody,False,0.3
+435,Miami Disco,College,synthwave,confident,0.59,96,0.43,0.56,0.12,34,2000s,nostalgic|electric|brooding,False,0.66
+436,Midnight Kids Theme,Le Matos,synthwave,intense,0.57,97,0.58,0.72,0.13,35,2010s,glowing|midnight|synthetic,False,0.7
+437,Vengeance,Perturbator,synthwave,moody,0.84,113,0.51,0.6,0.06,36,2010s,neon|nocturnal|cinematic,False,0.71
+438,Future Club,Perturbator,synthwave,nostalgic,0.67,119,0.53,0.56,0.15,35,2010s,retro-futuristic|driving|moody,False,0.59
+439,Sentient,Perturbator,synthwave,confident,0.79,102,0.54,0.72,0.07,28,2010s,nostalgic|electric|brooding,False,0.61
+440,Shadow,Waveshaper,synthwave,intense,0.58,88,0.63,0.75,0.07,32,2010s,glowing|midnight|synthetic,False,0.72
+441,Only Shallow,My Bloody Valentine,shoegaze,moody,0.49,136,0.33,0.46,0.28,55,1990s,wall-of-sound|hazy|droning,False,0.18
+442,Soon,My Bloody Valentine,shoegaze,chill,0.64,119,0.47,0.33,0.39,58,1990s,distorted|dreamy|layered,False,0.08
+443,When You Sleep,My Bloody Valentine,shoegaze,nostalgic,0.51,140,0.43,0.48,0.22,52,1990s,swirling|moody|atmospheric,False,0.1
+444,Sometimes,My Bloody Valentine,shoegaze,relaxed,0.5,114,0.48,0.44,0.1,52,1990s,blurry|reverberant|introspective,False,0.14
+445,Alison,Slowdive,shoegaze,moody,0.53,124,0.38,0.36,0.25,50,1990s,wall-of-sound|hazy|droning,False,0.07
+446,Souvlaki Space Station,Slowdive,shoegaze,chill,0.76,139,0.47,0.33,0.22,45,1990s,distorted|dreamy|layered,False,0.21
+447,When the Sun Hits,Slowdive,shoegaze,nostalgic,0.49,114,0.53,0.3,0.13,48,1990s,swirling|moody|atmospheric,False,0.13
+448,Sugar for the Pill,Slowdive,shoegaze,relaxed,0.66,103,0.33,0.5,0.37,44,2010s,blurry|reverberant|introspective,False,0.19
+449,Vapour Trail,Ride,shoegaze,moody,0.69,136,0.51,0.31,0.11,40,1990s,wall-of-sound|hazy|droning,False,0.09
+450,Leave Them All Behind,Ride,shoegaze,chill,0.7,132,0.31,0.34,0.16,42,1990s,distorted|dreamy|layered,False,0.06
+451,Drive Blind,Ride,shoegaze,nostalgic,0.75,107,0.24,0.28,0.11,40,1990s,swirling|moody|atmospheric,False,0.21
+452,Pearl,Chapterhouse,shoegaze,relaxed,0.63,104,0.23,0.32,0.17,40,1990s,blurry|reverberant|introspective,False,0.07
+453,Falling Down,Chapterhouse,shoegaze,moody,0.58,123,0.38,0.48,0.16,34,1990s,wall-of-sound|hazy|droning,False,0.18
+454,Duel,Swervedriver,shoegaze,chill,0.6,122,0.34,0.38,0.16,31,1990s,distorted|dreamy|layered,False,0.14
+455,Son of Mustang Ford,Swervedriver,shoegaze,nostalgic,0.57,101,0.27,0.43,0.11,34,1990s,swirling|moody|atmospheric,False,0.18
+456,Sweetness and Light,Lush,shoegaze,relaxed,0.61,135,0.3,0.29,0.2,33,1990s,blurry|reverberant|introspective,False,0.15
+457,De-Luxe,Lush,shoegaze,moody,0.7,128,0.41,0.33,0.18,31,1990s,wall-of-sound|hazy|droning,False,0.13
+458,Black Metallic,Catherine Wheel,shoegaze,chill,0.49,134,0.52,0.46,0.3,23,1990s,distorted|dreamy|layered,False,0.17
+459,Waydown,Catherine Wheel,shoegaze,nostalgic,0.72,109,0.53,0.32,0.15,22,1990s,swirling|moody|atmospheric,False,0.09
+460,One More Time,Medicine,shoegaze,relaxed,0.51,141,0.36,0.5,0.28,22,1990s,blurry|reverberant|introspective,False,0.22
+461,Plastic Love,Mariya Takeuchi,city pop,nostalgic,0.78,123,0.54,0.71,0.23,63,1980s,glossy|nostalgic|breezy,False,0.02
+462,Stay With Me,Miki Matsubara,city pop,carefree,0.65,125,0.52,0.79,0.29,60,1980s,nightdrive|polished|sun-faded,False,0.05
+463,Ride on Time,Tatsuro Yamashita,city pop,happy,0.56,116,0.72,0.8,0.4,61,1980s,smooth|retro|urbane,False,0.06
+464,Sparkle,Tatsuro Yamashita,city pop,romantic,0.55,107,0.81,0.83,0.38,60,1980s,shimmering|carefree|stylish,False,0.02
+465,Christmas Eve,Tatsuro Yamashita,city pop,nostalgic,0.68,113,0.53,0.69,0.15,58,1980s,glossy|nostalgic|breezy,False,0.04
+466,Cat's Eye,Anri,city pop,carefree,0.53,126,0.82,0.79,0.12,53,1980s,nightdrive|polished|sun-faded,False,0.03
+467,Remember Summer Days,Anri,city pop,happy,0.62,108,0.8,0.69,0.19,54,1980s,smooth|retro|urbane,False,0.03
+468,Goodnight,Anri,city pop,romantic,0.55,125,0.6,0.69,0.34,49,1980s,shimmering|carefree|stylish,False,0.05
+469,Kiss Me,Toshiki Kadomatsu,city pop,nostalgic,0.72,117,0.74,0.67,0.17,50,1980s,glossy|nostalgic|breezy,False,0.05
+470,September Blue,Toshiki Kadomatsu,city pop,carefree,0.73,125,0.65,0.63,0.35,48,1980s,nightdrive|polished|sun-faded,False,0.0
+471,Telephone Number,Junko Ohashi,city pop,happy,0.63,122,0.81,0.83,0.11,47,1980s,smooth|retro|urbane,False,0.01
+472,Silhouette,Junko Ohashi,city pop,romantic,0.75,105,0.53,0.63,0.22,41,1980s,shimmering|carefree|stylish,False,0.01
+473,Blue Land,Hiroshi Sato,city pop,nostalgic,0.65,110,0.74,0.65,0.11,40,1980s,glossy|nostalgic|breezy,False,0.02
+474,Magical,Junko Ohashi,city pop,carefree,0.57,125,0.68,0.75,0.21,36,1980s,nightdrive|polished|sun-faded,False,0.05
+475,Genesis,Anri,city pop,happy,0.75,100,0.62,0.71,0.15,39,1980s,smooth|retro|urbane,False,0.03
+476,Sweet Vacation,Toshiki Kadomatsu,city pop,romantic,0.76,118,0.6,0.67,0.31,36,1980s,shimmering|carefree|stylish,False,0.03
+477,4th Avenue Cafe,Lamp,city pop,nostalgic,0.79,119,0.52,0.84,0.31,27,2000s,glossy|nostalgic|breezy,False,0.04
+478,Yumepiste,Tatsuro Yamashita,city pop,carefree,0.59,123,0.84,0.79,0.33,32,1980s,nightdrive|polished|sun-faded,False,0.02
+479,Windy Lady,Anri,city pop,happy,0.76,112,0.61,0.73,0.32,26,1980s,smooth|retro|urbane,False,0.05
+480,"Loveland, Island",Taeko Onuki,city pop,romantic,0.55,114,0.86,0.85,0.37,26,1980s,shimmering|carefree|stylish,False,0.03
+481,The Girl from Ipanema,Astrud Gilberto & Stan Getz,bossa nova,relaxed,0.24,71,0.64,0.5,0.67,58,1960s,breezy|warm|understated,False,0.2
+482,Desafinado,João Gilberto,bossa nova,romantic,0.35,96,0.54,0.54,0.66,60,1950s,sultry|gentle|seaside,False,0.12
+483,Chega de Saudade,João Gilberto,bossa nova,peaceful,0.39,109,0.7,0.58,0.83,60,1950s,laid-back|romantic|airy,False,0.3
+484,Corcovado (Quiet Nights),João Gilberto,bossa nova,chill,0.24,111,0.62,0.6,0.78,57,1960s,soft|swaying|intimate,False,0.4
+485,Wave,Antônio Carlos Jobim,bossa nova,relaxed,0.26,86,0.71,0.57,0.74,51,1960s,breezy|warm|understated,False,0.38
+486,Águas de Março,Antônio Carlos Jobim,bossa nova,romantic,0.25,79,0.77,0.63,0.64,48,1970s,sultry|gentle|seaside,False,0.13
+487,Só Danço Samba,João Gilberto,bossa nova,peaceful,0.24,129,0.74,0.46,0.81,46,1960s,laid-back|romantic|airy,False,0.2
+488,One Note Samba,Antônio Carlos Jobim,bossa nova,chill,0.26,97,0.62,0.63,0.71,47,1960s,soft|swaying|intimate,False,0.28
+489,Insensatez (How Insensitive),João Gilberto,bossa nova,relaxed,0.19,64,0.77,0.56,0.9,48,1960s,breezy|warm|understated,False,0.12
+490,Mas Que Nada,Sérgio Mendes & Brasil '66,bossa nova,romantic,0.31,106,0.66,0.52,0.88,47,1960s,sultry|gentle|seaside,False,0.15
+491,Berimbau,Baden Powell,bossa nova,peaceful,0.26,130,0.78,0.66,0.63,39,1960s,laid-back|romantic|airy,False,0.36
+492,Águas de Março (Duet),Elis Regina & Antônio Carlos Jobim,bossa nova,chill,0.18,100,0.69,0.46,0.8,38,1970s,soft|swaying|intimate,False,0.1
+493,Triste,Antônio Carlos Jobim,bossa nova,relaxed,0.38,79,0.68,0.46,0.85,35,1960s,breezy|warm|understated,False,0.33
+494,Meditação,Antônio Carlos Jobim,bossa nova,romantic,0.29,112,0.62,0.65,0.71,34,1960s,sultry|gentle|seaside,False,0.11
+495,Samba de Verão (Summer Samba),Marcos Valle,bossa nova,peaceful,0.27,59,0.78,0.6,0.76,30,1960s,laid-back|romantic|airy,False,0.11
+496,O Barquinho,Roberto Menescal,bossa nova,chill,0.37,86,0.72,0.5,0.62,33,1960s,soft|swaying|intimate,False,0.22
+497,Dindi,João Gilberto,bossa nova,relaxed,0.21,63,0.58,0.49,0.83,29,1950s,breezy|warm|understated,False,0.28
+498,Se Todos Fossem Iguais a Você,João Gilberto,bossa nova,romantic,0.42,75,0.6,0.64,0.7,32,1950s,sultry|gentle|seaside,False,0.16
+499,Bim Bom,João Gilberto,bossa nova,peaceful,0.43,109,0.49,0.47,0.91,25,1950s,laid-back|romantic|airy,False,0.16
+500,Fotografia,Antônio Carlos Jobim,bossa nova,chill,0.31,73,0.6,0.58,0.59,25,1960s,soft|swaying|intimate,False,0.36
+501,One More Time,Daft Punk,french house,euphoric,0.8,116,0.68,0.76,0.03,64,2000s,filtered|groovy|glittery,False,0.55
+502,Around the World,Daft Punk,french house,confident,0.71,123,0.61,0.85,0.06,68,1990s,four-on-the-floor|stylish|euphoric,False,0.26
+503,Da Funk,Daft Punk,french house,happy,0.82,120,0.62,0.77,0.06,66,1990s,sample-heavy|chic|danceable,False,0.46
+504,Digital Love,Daft Punk,french house,carefree,0.77,117,0.65,0.87,0.04,62,2000s,disco-tinged|sleek|upbeat,False,0.53
+505,"Harder, Better, Faster, Stronger",Daft Punk,french house,euphoric,0.81,128,0.57,0.85,0.04,58,2000s,filtered|groovy|glittery,False,0.5
+506,Music Sounds Better with You,Stardust,french house,confident,0.69,123,0.79,0.88,0.06,54,1990s,four-on-the-floor|stylish|euphoric,False,0.3
+507,D.A.N.C.E.,Justice,french house,happy,0.7,117,0.76,0.88,0.03,56,2000s,sample-heavy|chic|danceable,False,0.24
+508,Genesis,Justice,french house,carefree,0.84,117,0.79,0.87,0.06,52,2000s,disco-tinged|sleek|upbeat,False,0.61
+509,Lady (Hear Me Tonight),Modjo,french house,euphoric,0.69,118,0.78,0.91,0.05,51,2000s,filtered|groovy|glittery,False,0.48
+510,Feel for You,Cassius,french house,confident,0.71,128,0.78,0.75,0.03,49,1990s,four-on-the-floor|stylish|euphoric,False,0.47
+511,1999,Cassius,french house,happy,0.88,125,0.57,0.89,0.05,45,1990s,sample-heavy|chic|danceable,False,0.34
+512,Toop Toop,Cassius,french house,carefree,0.77,123,0.57,0.82,0.09,47,1990s,disco-tinged|sleek|upbeat,False,0.54
+513,Music Takes Me Up,Alan Braxe & Fred Falke,french house,euphoric,0.86,117,0.53,0.89,0.1,41,2000s,filtered|groovy|glittery,False,0.55
+514,Rubicon,Alan Braxe & Fred Falke,french house,confident,0.88,123,0.75,0.88,0.03,41,2000s,four-on-the-floor|stylish|euphoric,False,0.36
+515,Rollin' & Scratchin',Daft Punk,french house,happy,0.69,126,0.78,0.89,0.09,40,1990s,sample-heavy|chic|danceable,False,0.4
+516,Love Generation,Bob Sinclar,french house,carefree,0.88,123,0.5,0.8,0.05,39,2000s,disco-tinged|sleek|upbeat,False,0.5
+517,"World, Hold On",Bob Sinclar ft. Steve Edwards,french house,euphoric,0.85,125,0.73,0.79,0.1,36,2000s,filtered|groovy|glittery,False,0.57
+518,Rock This Party (Everybody Dance Now),Bob Sinclar,french house,confident,0.83,125,0.51,0.88,0.04,35,2000s,four-on-the-floor|stylish|euphoric,False,0.35
+519,Flat Beat,Mr. Oizo,french house,happy,0.76,124,0.78,0.87,0.02,32,1990s,sample-heavy|chic|danceable,False,0.59
+520,Pop Culture,Madeon,french house,carefree,0.78,123,0.78,0.76,0.06,34,2010s,disco-tinged|sleek|upbeat,False,0.3
+521,An Ending (Ascent),Brian Eno,ambient,peaceful,0.05,62,0.46,0.1,0.86,50,1980s,weightless|meditative|spacious,False,0.68
+522,1/1,Brian Eno,ambient,chill,0.19,53,0.55,0.11,0.47,49,1970s,ethereal|drifting|serene,False,0.82
+523,Discreet Music,Brian Eno,ambient,relaxed,0.07,74,0.29,0.13,0.86,50,1970s,textural|hushed|introspective,False,0.92
+524,Avril 14th,Aphex Twin,ambient,focused,0.21,80,0.46,0.14,0.66,47,2000s,glacial|calming|atmospheric,False,0.77
+525,Rhubarb,Aphex Twin,ambient,peaceful,0.25,77,0.39,0.16,0.74,42,1990s,weightless|meditative|spacious,False,0.89
+526,Xtal,Aphex Twin,ambient,chill,0.16,54,0.52,0.08,0.59,45,1990s,ethereal|drifting|serene,False,0.93
+527,Dayvan Cowboy,Boards of Canada,ambient,relaxed,0.12,81,0.4,0.06,0.9,42,2000s,textural|hushed|introspective,False,0.82
+528,Roygbiv,Boards of Canada,ambient,focused,0.23,74,0.31,0.14,0.51,36,1990s,glacial|calming|atmospheric,False,0.97
+529,Telephasic Workshop,Boards of Canada,ambient,peaceful,0.16,60,0.51,0.06,0.63,38,1990s,weightless|meditative|spacious,False,0.97
+530,Disintegration Loops 1.1,William Basinski,ambient,chill,0.19,76,0.43,0.13,0.68,29,2000s,ethereal|drifting|serene,False,0.98
+531,Structures from Silence,Steve Roach,ambient,relaxed,0.23,83,0.58,0.17,0.67,35,1980s,textural|hushed|introspective,False,0.82
+532,Poa Alpina,Biosphere,ambient,focused,0.09,85,0.34,0.17,0.46,31,1990s,glacial|calming|atmospheric,False,0.87
+533,Heavy Water/I'd Rather Be Sleeping,Grouper,ambient,peaceful,0.12,72,0.41,0.14,0.79,27,2000s,weightless|meditative|spacious,False,0.73
+534,Chimeras,Tim Hecker,ambient,chill,0.13,66,0.42,0.06,0.63,28,2000s,ethereal|drifting|serene,False,0.89
+535,Weightless,Marconi Union,ambient,relaxed,0.12,83,0.56,0.15,0.92,22,2010s,textural|hushed|introspective,False,0.87
+536,Bardo Sea,Tim Hecker,ambient,focused,0.2,66,0.5,0.19,0.47,26,2000s,glacial|calming|atmospheric,False,0.89
+537,"Requiem for Dying Mothers, Pt. 2",Stars of the Lid,ambient,peaceful,0.09,82,0.5,0.09,0.46,20,2000s,weightless|meditative|spacious,False,0.77
+538,The Motionless Passenger,Stars of the Lid,ambient,chill,0.19,90,0.51,0.15,0.9,22,2000s,ethereal|drifting|serene,False,0.83
+539,Madrigals of the Rose Angel,Harold Budd,ambient,relaxed,0.15,48,0.45,0.04,0.48,15,1970s,textural|hushed|introspective,False,0.88
+540,The Serpent (In Quicksilver),Harold Budd,ambient,focused,0.24,58,0.59,0.15,0.48,17,1980s,glacial|calming|atmospheric,False,0.67
+541,Bela Lugosi's Dead,Bauhaus,darkwave,moody,0.45,122,0.13,0.6,0.07,58,1970s,brooding|gothic|nocturnal,False,0.09
+542,Spellbound,Siouxsie and the Banshees,darkwave,angry,0.67,123,0.24,0.52,0.25,58,1980s,cold|haunting|moody,False,0.07
+543,Happy House,Siouxsie and the Banshees,darkwave,intense,0.4,112,0.24,0.64,0.29,55,1980s,shadowy|dramatic|cinematic,False,0.03
+544,Song to the Siren,This Mortal Coil,darkwave,nostalgic,0.38,104,0.18,0.61,0.26,50,1980s,melancholic|atmospheric|icy,False,0.04
+545,A Forest,The Cure,darkwave,moody,0.6,111,0.35,0.53,0.2,54,1980s,brooding|gothic|nocturnal,False,0.08
+546,Stigmata,Clan of Xymox,darkwave,angry,0.48,99,0.42,0.4,0.29,45,1980s,cold|haunting|moody,False,0.07
+547,Louise,Clan of Xymox,darkwave,intense,0.39,105,0.29,0.42,0.19,45,1980s,shadowy|dramatic|cinematic,False,0.03
+548,The Host of Seraphim,Dead Can Dance,darkwave,nostalgic,0.62,97,0.13,0.63,0.2,46,1980s,melancholic|atmospheric|icy,False,0.08
+549,Yulunga (Spirit Dance),Dead Can Dance,darkwave,moody,0.67,107,0.27,0.53,0.13,41,1990s,brooding|gothic|nocturnal,False,0.08
+550,Moonchild,Fields of the Nephilim,darkwave,angry,0.45,99,0.28,0.59,0.08,40,1980s,cold|haunting|moody,False,0.05
+551,Preacher Man,Fields of the Nephilim,darkwave,intense,0.5,101,0.32,0.47,0.12,40,1980s,shadowy|dramatic|cinematic,False,0.1
+552,Belirdi Simdi,She Past Away,darkwave,nostalgic,0.54,123,0.37,0.64,0.04,37,2010s,melancholic|atmospheric|icy,False,0.07
+553,İlelebet,She Past Away,darkwave,moody,0.69,103,0.41,0.56,0.12,39,2010s,brooding|gothic|nocturnal,False,0.09
+554,Kayıpdayız,She Past Away,darkwave,angry,0.51,122,0.34,0.39,0.17,33,2010s,cold|haunting|moody,False,0.08
+555,Agonised by Love,Clan of Xymox,darkwave,intense,0.55,119,0.13,0.62,0.09,35,1980s,shadowy|dramatic|cinematic,False,0.05
+556,Romeo's Distress,Christian Death,darkwave,nostalgic,0.44,122,0.28,0.55,0.09,27,1980s,melancholic|atmospheric|icy,False,0.06
+557,Blue Monday,New Order,darkwave,moody,0.61,94,0.18,0.6,0.27,27,1980s,brooding|gothic|nocturnal,False,0.07
+558,Temple of Love,Sisters of Mercy,darkwave,angry,0.66,92,0.34,0.42,0.16,22,1980s,cold|haunting|moody,False,0.03
+559,Lucretia My Reflection,Sisters of Mercy,darkwave,intense,0.4,104,0.29,0.54,0.1,23,1980s,shadowy|dramatic|cinematic,False,0.03
+560,This Corrosion,Sisters of Mercy,darkwave,nostalgic,0.59,115,0.21,0.49,0.07,24,1980s,melancholic|atmospheric|icy,False,0.0
+561,Business,DVRST,phonk,intense,0.6,165,0.15,0.78,0.04,66,2020s,gritty|nocturnal|cowbell-driven,False,0.04
+562,Murder in My Mind,Kordhell,phonk,angry,0.8,166,0.17,0.76,0.04,67,2020s,menacing|lo-fi|aggressive,False,0.03
+563,Vendetta,Kordhell,phonk,confident,0.73,162,0.21,0.75,0.08,62,2020s,drift-ready|dark|hypnotic,False,0.07
+564,Never Stop,Kordhell,phonk,moody,0.78,147,0.36,0.8,0.08,61,2020s,distorted|street|relentless,False,0.06
+565,Poison (I Wanna Poison You),Ghostface Playa,phonk,intense,0.88,163,0.42,0.59,0.0,59,2010s,gritty|nocturnal|cowbell-driven,True,0.05
+566,Rain,Freddie Dredd,phonk,angry,0.76,133,0.24,0.75,0.09,57,2010s,menacing|lo-fi|aggressive,True,0.03
+567,Devil May Cry,Freddie Dredd,phonk,confident,0.79,160,0.19,0.6,0.06,52,2010s,drift-ready|dark|hypnotic,True,0.02
+568,Lifestyle,SHADXWBXRN,phonk,moody,0.79,164,0.41,0.78,0.09,53,2020s,distorted|street|relentless,False,0.08
+569,Speed of Light,Interworld,phonk,intense,0.76,146,0.35,0.62,0.02,55,2020s,gritty|nocturnal|cowbell-driven,False,0.05
+570,9MM,Pharmacist,phonk,angry,0.69,170,0.35,0.58,0.06,48,2020s,menacing|lo-fi|aggressive,False,0.07
+571,Warlord,KSLV Noh,phonk,confident,0.72,167,0.35,0.74,0.02,49,2020s,drift-ready|dark|hypnotic,False,0.05
+572,Roll Up,DJ Smokey,phonk,moody,0.89,138,0.14,0.62,0.02,44,2010s,distorted|street|relentless,True,0.06
+573,Lantern,Soudiere,phonk,intense,0.85,136,0.36,0.64,0.05,45,2020s,gritty|nocturnal|cowbell-driven,False,0.04
+574,Beg for Mercy,PLAYAPLAYA & Duskkey,phonk,angry,0.74,134,0.2,0.71,0.08,38,2020s,menacing|lo-fi|aggressive,False,0.07
+575,Lock Jaw,LEVAX & KSLV Noh,phonk,confident,0.75,144,0.37,0.72,0.07,41,2020s,drift-ready|dark|hypnotic,False,0.07
+576,Cake (Phonk Remix),Melvillous,phonk,moody,0.78,165,0.33,0.76,0.02,35,2020s,distorted|street|relentless,False,0.0
+577,Terminal,Dxrk ダーク,phonk,intense,0.87,162,0.29,0.76,0.04,36,2020s,gritty|nocturnal|cowbell-driven,False,0.02
+578,Sahara,Kordhell,phonk,angry,0.81,146,0.18,0.69,0.01,28,2020s,menacing|lo-fi|aggressive,False,0.03
+579,Screwface Capital,Ghostface Playa,phonk,confident,0.66,167,0.36,0.75,0.01,31,2010s,drift-ready|dark|hypnotic,True,0.01
+580,Everynight (Phonk Edit),DVRST,phonk,moody,0.76,137,0.38,0.68,0.04,28,2020s,distorted|street|relentless,False,0.02
+581,Adiwele,Kabza De Small & DJ Maphorisa ft. Young Stunna,amapiano,carefree,0.56,109,0.56,0.88,0.16,69,2020s,log-drum|groovy|warm,False,0.33
+582,Amantombazane,Mr JazziQ & Reece Madlisa,amapiano,happy,0.78,104,0.49,0.87,0.07,69,2020s,hypnotic|danceable|sunset,False,0.39
+583,Pit Bull,Focalistic & Vigro Deep,amapiano,confident,0.61,115,0.57,0.85,0.09,65,2020s,breezy|rhythmic|communal,False,0.28
+584,Ke Star,Focalistic ft. Vigro Deep,amapiano,euphoric,0.71,105,0.66,0.82,0.24,63,2020s,laid-back|festive|percussive,False,0.23
+585,Amapiano,Kabza De Small & DJ Maphorisa ft. Madumane,amapiano,carefree,0.77,111,0.75,0.92,0.05,61,2020s,log-drum|groovy|warm,False,0.36
+586,Sukendleleni,Young Stunna,amapiano,happy,0.6,112,0.7,0.79,0.09,61,2020s,hypnotic|danceable|sunset,False,0.18
+587,Adenauer Tower,Kelvin Momo,amapiano,confident,0.57,107,0.62,0.81,0.07,57,2020s,breezy|rhythmic|communal,False,0.29
+588,Sponono,"Kabza De Small & DJ Maphorisa ft. Wizkid, Burna Boy, Cassper Nyovest",amapiano,euphoric,0.69,114,0.76,0.75,0.06,53,2020s,laid-back|festive|percussive,False,0.25
+589,Umsebenzi Wethu,DJ Maphorisa & Kabza De Small ft. Ma Lemon,amapiano,carefree,0.7,104,0.78,0.78,0.08,53,2010s,log-drum|groovy|warm,False,0.37
+590,Jerusalema,Master KG ft. Nomcebo Zikode,amapiano,happy,0.65,113,0.7,0.92,0.2,55,2010s,hypnotic|danceable|sunset,False,0.34
+591,Umlando,"Mellow & Sleazy ft. Chley, Young Stunna, Sizwe Alakine",amapiano,confident,0.6,113,0.82,0.91,0.09,50,2020s,breezy|rhythmic|communal,False,0.34
+592,2AM in Joburg,Young Stunna,amapiano,euphoric,0.75,116,0.54,0.88,0.11,46,2020s,laid-back|festive|percussive,False,0.3
+593,Areas,"Uncle Waffles & Tony Duardo ft. Lee McKrazy, Xduppy",amapiano,carefree,0.66,113,0.5,0.82,0.08,45,2020s,log-drum|groovy|warm,False,0.06
+594,Tanzania,"Uncle Waffles, Tony Duardo & Gaba Cannal",amapiano,happy,0.78,114,0.62,0.78,0.07,44,2020s,hypnotic|danceable|sunset,False,0.22
+595,Yahyuppiyah,"DJ Maphorisa, Kabza De Small, Ceeka RSA ft. Nkosazana Daughter",amapiano,confident,0.55,116,0.66,0.89,0.07,44,2020s,breezy|rhythmic|communal,False,0.28
+596,Asibe Happy,Kabza De Small & DJ Maphorisa ft. Ami Faku,amapiano,euphoric,0.68,104,0.78,0.9,0.19,37,2020s,laid-back|festive|percussive,False,0.23
+597,Osama,Young Stunna,amapiano,carefree,0.55,112,0.63,0.93,0.15,35,2020s,log-drum|groovy|warm,False,0.32
+598,Woza,Kabza De Small & DJ Maphorisa ft. Young Stunna,amapiano,happy,0.75,116,0.76,0.86,0.14,36,2020s,hypnotic|danceable|sunset,False,0.14
+599,Mnike,"Tyler ICU & DJ Maphorisa ft. Tumelo_za, Nkosazana Daughter, Ceeka RSA",amapiano,confident,0.78,105,0.58,0.92,0.14,34,2020s,breezy|rhythmic|communal,False,0.12
+600,Water,Tyla,amapiano,euphoric,0.75,113,0.66,0.85,0.13,32,2020s,laid-back|festive|percussive,False,0.12

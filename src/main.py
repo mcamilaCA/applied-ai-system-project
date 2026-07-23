@@ -28,7 +28,7 @@ NOTICE_ICONS = {"warning": "⚠️", "info": "ℹ️"}
 NL_QUERY_EXAMPLE = "I want something upbeat and nostalgic, kind of like early-2000s pop."
 
 
-def build_user_prefs() -> dict:
+def build_user_prefs(songs: list) -> dict:
     """
     Builds the profile dict that gets scored against the catalog. If
     GROQ_API_KEY is set, demonstrates the RAG taste-parser by running
@@ -46,7 +46,14 @@ def build_user_prefs() -> dict:
         }
 
     print(f"✨ GROQ_API_KEY found -- parsing taste from: {NL_QUERY_EXAMPLE!r}\n")
-    engine = RAGEngine(knowledge_base=KnowledgeBase.load(), llm_client=LLMClient())
+    catalog_genres = {song["genre"] for song in songs if song.get("genre")}
+    catalog_moods = {song["mood"] for song in songs if song.get("mood")}
+    engine = RAGEngine(
+        knowledge_base=KnowledgeBase.load(),
+        llm_client=LLMClient(),
+        catalog_genres=catalog_genres,
+        catalog_moods=catalog_moods,
+    )
     parsed = engine.parse_taste_query(NL_QUERY_EXAMPLE)
     print(f"   Parsed profile: {parsed.profile}")
     print(f"   Grounded on: {', '.join(parsed.sources) or '(no matching reference docs)'}\n")
@@ -64,7 +71,7 @@ def main() -> None:
     # user_prefs = {"genre": "pop", "mood": "happy", "energy": float("nan"), "acousticness": 0.3}
     # user_prefs = {"genre": "lofi", "mood": "chill", "energy": 0.4, "acousticness": True, "danceability": 1.0}
     # user_prefs = {"genre": "lofi", "mood": "chill", "energy": 0.4, "acousticness": 0.8, "wants_instrumental": True, "preferred_decade": "1990s", "clean_only": True}
-    user_prefs = build_user_prefs()
+    user_prefs = build_user_prefs(songs)
 
     try:
         recommendations, notices = recommend_songs(user_prefs, songs, k=5)

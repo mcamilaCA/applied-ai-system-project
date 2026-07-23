@@ -42,7 +42,15 @@ def get_songs():
 
 @st.cache_resource
 def get_rag_engine():
-    return RAGEngine(knowledge_base=KnowledgeBase.load(), llm_client=LLMClient())
+    songs = get_songs()
+    catalog_genres = {song["genre"] for song in songs if song.get("genre")}
+    catalog_moods = {song["mood"] for song in songs if song.get("mood")}
+    return RAGEngine(
+        knowledge_base=KnowledgeBase.load(),
+        llm_client=LLMClient(),
+        catalog_genres=catalog_genres,
+        catalog_moods=catalog_moods,
+    )
 
 
 def unique_sorted(songs, field):
