@@ -97,6 +97,22 @@ def test_parse_taste_query_returns_profile_and_sources():
     assert "pop" in fake_llm.last_prompt.lower()
 
 
+def test_parse_taste_query_prompt_always_includes_decade_mapping_rules():
+    # Regression test: decade-mapping instructions must reach the LLM even when
+    # the knowledge base's decade-vocabulary doc doesn't make the top-k
+    # retrieval slots (e.g. it loses a tie to an unrelated doc with incidental
+    # keyword overlap), since preferred_decade parsing shouldn't depend on
+    # retrieval luck.
+    fake_llm = FakeLLMClient(json_response={"genre": "pop", "mood": "happy", "preferred_decade": "2000s"})
+    engine = RAGEngine(knowledge_base=make_knowledge_base(), llm_client=fake_llm)
+
+    engine.parse_taste_query("early 2000s happy pop")
+
+    prompt = fake_llm.last_prompt.lower()
+    assert "map any specific year" in prompt
+    assert "early" in prompt and "mid" in prompt and "late" in prompt
+
+
 def test_explain_with_context_returns_text_and_sources():
     fake_llm = FakeLLMClient(text_response="  This matches your love of upbeat pop.  ")
     engine = RAGEngine(knowledge_base=make_knowledge_base(), llm_client=fake_llm)

@@ -190,7 +190,11 @@ class RAGExplanation:
 _PROFILE_FIELDS_NOTE = (
     "Only use these keys, all optional except genre and mood: "
     "genre (str), mood (str), energy (float 0-1), likes_acoustic (bool), "
-    "preferred_decade (str like \"1990s\"/\"2000s\"/\"2010s\"/\"2020s\", omit if not mentioned), "
+    "preferred_decade (str like \"1990s\"/\"2000s\"/\"2010s\"/\"2020s\", omit if not mentioned) -- "
+    "map any specific year mentioned (e.g. \"2003\", \"1997\") to the decade it falls in "
+    "(e.g. \"2000s\", \"1990s\"); a \"early\"/\"mid\"/\"late\" modifier on a decade "
+    "(e.g. \"early 2000s\", \"late 90s\") still refers to that decade -- extract the decade "
+    "and ignore the modifier, "
     "wants_instrumental (bool, omit if not mentioned), clean_only (bool), prefer_popular (bool). "
     "Omit any key the listener didn't express an opinion about -- do not guess a value for it."
 )
