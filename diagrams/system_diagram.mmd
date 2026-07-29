@@ -1,0 +1,37 @@
+flowchart LR
+    U([User query /\npreferences]) --> Agent
+
+    subgraph Core["Core AI System"]
+        Agent[Agent / Orchestrator\nRAGEngine + Recommender]
+        Retriever[Retriever\nKnowledgeBase]
+        LLM[LLM Client]
+
+        Agent -->|query| Retriever
+        Retriever -->|retrieved docs| Agent
+        Agent -->|prompt + context| LLM
+        LLM -->|generated text| Agent
+    end
+
+    Agent --> Output([Output:\nrecommendation +\nexplanation])
+    Output --> User2([User])
+
+    subgraph QA["Testing & Evaluation (offline / CI)"]
+        Tester[Unit Tests\ntests/*.py]
+        Evaluator[ReliabilityHarness\nConsistencyChecker +\nGroundednessChecker]
+        Report[[EvalReport /\nreliability_report.md]]
+    end
+
+    Agent -.eval cases.-> Evaluator
+    Retriever -.eval cases.-> Evaluator
+    Tester -.regression checks.-> Agent
+    Evaluator --> Report
+
+    Human{{Human Reviewer}}
+    Report --> Human
+    Human -->|approve| Deploy([Ship / keep config])
+    Human -->|flag issues| Fix([Fix prompt / data /\ncode])
+    Fix --> Agent
+
+    style Human fill:#f9d77e,stroke:#333,stroke-width:2px
+    style QA fill:#eef,stroke:#556
+    style Core fill:#eef7ee,stroke:#565
