@@ -54,7 +54,16 @@ def build_user_prefs(songs: list) -> dict:
         catalog_genres=catalog_genres,
         catalog_moods=catalog_moods,
     )
-    parsed = engine.parse_taste_query(NL_QUERY_EXAMPLE)
+    try:
+        parsed = engine.parse_taste_query(NL_QUERY_EXAMPLE)
+    except RuntimeError as error:
+        print(f"⚠️  AI taste parser failed ({error}) -- falling back to the hardcoded example profile.\n")
+        return {
+            "genre": "pop", "mood": "happy", "energy": 0.8, "likes_acoustic": False,
+            "preferred_decade": "2020s", "wants_instrumental": False,
+            "clean_only": True, "prefer_popular": True,
+        }
+
     print(f"   Parsed profile: {parsed.profile}")
     print(f"   Grounded on: {', '.join(parsed.sources) or '(no matching reference docs)'}\n")
     return parsed.profile

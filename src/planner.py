@@ -107,18 +107,38 @@ def _plan_energy(raw_prefs: Dict, cleaned: Dict, notices: List[Notice]) -> None:
 
 def _plan_acousticness(raw_prefs: Dict, cleaned: Dict, notices: List[Notice]) -> None:
     likes_acoustic = raw_prefs.get("likes_acoustic")
+    acousticness_value = raw_prefs.get("acousticness")
 
-    if likes_acoustic is None and isinstance(raw_prefs.get("acousticness"), bool):
+    if likes_acoustic is None and isinstance(acousticness_value, bool):
         # The documented bug: a boolean preference typed under the wrong key
         # ("acousticness") instead of "likes_acoustic" used to be silently
         # ignored entirely. Recover the listener's evident intent instead.
-        cleaned["likes_acoustic"] = raw_prefs["acousticness"]
+        cleaned["likes_acoustic"] = acousticness_value
         notices.append(Notice(
             level="warning", field="acousticness",
-            message=f"found a boolean under 'acousticness' ({raw_prefs['acousticness']!r}); "
-                    f"treating it as likes_acoustic={raw_prefs['acousticness']!r} "
+            message=f"found a boolean under 'acousticness' ({acousticness_value!r}); "
+                    f"treating it as likes_acoustic={acousticness_value!r} "
                     f"(pass a numeric 0-1 value under 'acousticness' for a fine-grained target instead)",
         ))
+        return
+
+    if likes_acoustic is None and acousticness_value is not None:
+        # A numeric fine-grained target, as promised by the notice above:
+        # bypasses the coarse liked/disliked anchor and scores directly
+        # against the listener's requested value.
+        if _is_real_number(acousticness_value) and 0.0 <= acousticness_value <= 1.0:
+            cleaned["target_acousticness"] = float(acousticness_value)
+            notices.append(Notice(
+                level="info", field="acousticness",
+                message=f"using numeric acousticness={float(acousticness_value)!r} as a fine-grained target",
+            ))
+        else:
+            cleaned["_skip_acousticness"] = True
+            notices.append(Notice(
+                level="warning", field="acousticness",
+                message=f"acousticness value {acousticness_value!r} is invalid (must be a number in [0, 1]); "
+                        f"excluding acousticness from scoring instead of letting it corrupt the ranking",
+            ))
         return
 
     if likes_acoustic is None:

@@ -4,7 +4,7 @@ import math
 import pytest
 
 from src.planner import PlanningError, plan_user_prefs
-from src.recommender import recommend_songs
+from src.recommender import recommend_songs, score_song
 
 CATALOG_GENRES = {"pop", "lofi"}
 CATALOG_MOODS = {"happy", "chill"}
@@ -51,6 +51,46 @@ def test_boolean_under_acousticness_key_is_recovered():
 
     assert cleaned["likes_acoustic"] is True
     assert any(n.level == "warning" and n.field == "acousticness" for n in notices)
+
+
+def test_numeric_acousticness_is_used_as_fine_grained_target():
+    prefs = {"genre": "pop", "mood": "happy", "energy": 0.8, "acousticness": 0.6}
+    cleaned, notices = plan_user_prefs(prefs, CATALOG_GENRES, CATALOG_MOODS)
+
+    assert cleaned["target_acousticness"] == 0.6
+    assert "likes_acoustic" not in cleaned
+    assert not cleaned.get("_skip_acousticness")
+    assert any(n.level == "info" and n.field == "acousticness" for n in notices)
+
+
+def test_out_of_range_numeric_acousticness_is_excluded():
+    prefs = {"genre": "pop", "mood": "happy", "energy": 0.8, "acousticness": 1.5}
+    cleaned, notices = plan_user_prefs(prefs, CATALOG_GENRES, CATALOG_MOODS)
+
+    assert cleaned["_skip_acousticness"] is True
+    assert "target_acousticness" not in cleaned
+    assert any(n.level == "warning" and n.field == "acousticness" for n in notices)
+
+
+def test_nan_acousticness_is_excluded_instead_of_corrupting_the_score():
+    prefs = {"genre": "pop", "mood": "happy", "energy": 0.8, "acousticness": float("nan")}
+    cleaned, notices = plan_user_prefs(prefs, CATALOG_GENRES, CATALOG_MOODS)
+
+    assert cleaned["_skip_acousticness"] is True
+    assert any(n.level == "warning" and n.field == "acousticness" for n in notices)
+
+
+def test_numeric_acousticness_target_is_honored_by_score_song():
+    prefs = {"genre": "pop", "mood": "happy", "energy": 0.8, "acousticness": 0.6}
+    cleaned, _ = plan_user_prefs(prefs, CATALOG_GENRES, CATALOG_MOODS)
+    song = {
+        "genre": "pop", "mood": "happy", "energy": 0.8, "acousticness": 0.6,
+        "danceability": 0.8,
+    }
+
+    _, reasons = score_song(cleaned, song)
+
+    assert any("vs target 0.60" in reason for reason in reasons)
 
 
 def test_trailing_whitespace_in_genre_is_trimmed():

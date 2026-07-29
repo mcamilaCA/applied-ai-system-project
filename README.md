@@ -1,54 +1,45 @@
-# 🎵 Music Recommender Simulation
+# 🎵 Tunefy — Music Recommender Simulation with RAG & Reliability
 
-## How The System Works
+## Original Project (Modules 1–3): Tunefy
 
-The system aims to recommend songs to user's based on their preferences & likings. For each song, details like genre, mood, energy and acousticness are translated into a score with the end goal of achieving a high compatibililty with a user's profile, the higher the score, the more likely a song is to be liked by the user.
+This project's original, Modules 1–3 form was **Tunefy**, a purely deterministic song recommender. Given a listener's genre, mood, energy, and acousticness preferences, it scored every song in a catalog with a weighted, distance-based formula ("how close is this song's energy/acousticness to what the user wants?" rather than a hard yes/no cutoff) and returned the top-ranked matches, using danceability only to break ties. There was no AI in the loop at that stage — just a scoring function over structured input, built to be simple, testable, and fully predictable.
 
-For this, user statistics will be used to define: favorite mood, their most frequently listened energy levels and whether or not they like acoustic music. 
-
-Instead of using thresholds, recommender calculates distance-based rewards prioritizing answering "how close is this feature to what the user wants to hear?". Once each weighted score is calculated, a ranking of all songs scores is computed to decide which songs are the ones with higher likelihood to be liked by the user and they are returned. If there is a tie of songs with the same score, danceability preferences are used to determine the one to be given to the user.
-
-This being said, the weights that will be used for each attribute are:
-1. genre: 35%
-2. mood: 30%
-3. energy: 20%
-4. acousticness: 15% 
-
-As seen by the weigthts above, the system has a bias for genre and mood - since it assumes every user gives a higher priority to genre than to mood or any of the other atributes. In an ideal system, it might ask for users preference, update the weights accordingly and store that data internally.
-
-Before any of that scoring happens, a validation/planning step (`src/planner.py`) checks the raw preferences first. A missing or invalid genre/mood has no sensible fallback, so it's rejected outright with a clear error instead of producing a ranking. A missing or invalid energy/acousticness value (like the `NaN` or wrong-field-name cases below) gets excluded from scoring instead of silently corrupting it, and every decision the planner makes is logged to `logs/recommender.log` and surfaced to the listener as a notice, so a messy preference no longer produces a confident-looking but meaningless list with no explanation.
+Everything below this point — the validation layer, the natural-language interface, the grounded explanations, and the reliability harness — is new work built *on top of* that unchanged deterministic core.
 
 ---
 
-## AI Features (RAG + Reliability)
+## Title and Summary
 
-Two AI-powered additions sit on top of the deterministic scoring above -- neither one touches the scoring math itself, so the core recommender stays exactly as testable and predictable as before.
+**Tunefy** recommends songs from a catalog of 600 real tracks based on a listener's taste, and explains *why* each song was picked instead of just handing back a black-box list. It matters because recommenders are usually judged on whether their picks feel right, but rarely let a user check the reasoning — Tunefy's score breakdown and AI explanations are both meant to be checkable, not just plausible-sounding.
 
-**1. Natural-language taste parser.** Instead of filling out the sidebar form, you can describe your taste in plain English ("upbeat, nostalgic, early-2000s pop"). `RAGEngine.parse_taste_query` (`src/rag.py`) retrieves matching genre/mood/vocabulary notes from a small local knowledge base (`data/knowledge_base.json`), then asks an LLM to turn the description into the same structured preferences dict the form produces. That dict is validated by the exact same `plan_user_prefs` pipeline a manually-typed profile goes through, so a malformed field coming out of the LLM gets caught the same way a typo would.
+On top of the original scoring engine, this phase adds three things: a listener can type their taste in plain English instead of filling out a form, each recommendation can get a short natural-language explanation grounded in retrieved reference notes, and a reliability harness checks that the new LLM-backed features behave consistently and don't invent facts.
 
-**2. Grounded explanations.** Each recommendation already comes with a raw per-feature point breakdown. Optionally, `RAGEngine.explain_with_context` turns that breakdown into a short natural-language paragraph, using the same knowledge base for extra genre/artist context -- and is explicitly instructed to only state things the breakdown or retrieved notes actually support, so it can't invent facts about a song.
+## Architecture Overview
 
-**Setup:** both features need a free Groq API key (console.groq.com -- no credit card required). Export it before running the app or the CLI example:
+See [`diagrams/system_diagram.mmd`](diagrams/system_diagram.mmd) (and the class-level view in [`diagrams/uml_diagram.mmd`](diagrams/uml_diagram.mmd)). At a high level:
 
-```bash
-export GROQ_API_KEY=your-key-here
+```
+User (preferences or NL query)
+        │
+        ▼
+   Agent / Orchestrator  ──query──▶  Retriever (KnowledgeBase)
+ (RAGEngine + Recommender) ◀─docs──
+        │
+        ├──prompt + context──▶ LLM Client ──generated text──▶ (back to Agent)
+        │
+        ▼
+   Output: ranked recommendations + optional grounded explanation
+        │
+        ▼
+      User
 ```
 
-Without it, everything else (the structured form, the CLI's hardcoded example) still works fine -- only the AI-powered paths are unavailable, and they fail with a clear message rather than crashing.
+- **Agent/Orchestrator** — `RAGEngine` (`src/rag.py`) handles anything that touches the LLM (parsing a free-text query, generating an explanation); `Recommender`/`plan_user_prefs` (`src/recommender.py`, `src/planner.py`) handle the deterministic scoring and input validation. The two are deliberately decoupled: RAG output is just another `user_prefs` dict, validated through the exact same planning step a manually-typed profile goes through.
+- **Retriever** — `KnowledgeBase` (`data/knowledge_base.json`) does plain keyword/tag retrieval over a small set of genre, mood, and vocabulary reference notes, used both to ground the NL-parser's interpretation of a phrase and to give the explanation generator source material it's allowed to cite.
+- **LLM Client** — a thin Groq wrapper (`src/rag.py`), the only place in the system that talks to an external API.
+- **Testing & Evaluation loop** (right side of the diagram) — `tests/*.py` regression-test the deterministic core and the AI surfaces' surrounding logic against fake LLM responses, while `src/reliability.py` runs real golden cases (`data/eval_cases.json`) through the live LLM and scores consistency/groundedness into `logs/reliability_report.md`. A human reviewer reads that report and either ships as-is or feeds problems back into a prompt/data/code fix — the loop the diagram draws from `Evaluator → Report → Human → Fix → Agent`.
 
-**3. Reliability harness.** Because an LLM is now in the loop, `src/reliability.py` checks two things the deterministic core never needed checking: whether repeated calls with the same input stay *consistent*, and whether generated text stays *grounded* in what it retrieved rather than inventing details. Run it with:
-
-```bash
-python -m src.reliability
-```
-
-This runs the golden cases in `data/eval_cases.json` and writes a scored report to `logs/reliability_report.md` (also printed to the console). See `model_card.md` for more on what it measures and its current limitations.
-
----
-
-## Getting Started
-
-### Setup
+## Setup Instructions
 
 1. Create a virtual environment (optional but recommended):
 
@@ -56,350 +47,118 @@ This runs the golden cases in `data/eval_cases.json` and writes a scored report 
    python -m venv .venv
    source .venv/bin/activate      # Mac or Linux
    .venv\Scripts\activate         # Windows
+   ```
 
-2. Install dependencies
+2. Install dependencies:
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-3. Run the app:
+3. (Optional) Enable the AI features with a free Groq API key (console.groq.com — no credit card required):
 
-```bash
-python -m src.main
-```
+   ```bash
+   export GROQ_API_KEY=your-key-here
+   ```
 
-### Running the Web App
+   Without it, the CLI and web app still run end-to-end on a hardcoded example profile — only the natural-language box and AI explanation tabs are unavailable, and they fail with a clear message rather than crashing.
 
-To interact with the recommender in a browser instead of the CLI:
+4. Run the CLI, from the project root:
 
-```bash
-streamlit run src/app.py
-```
+   ```bash
+   python src/main.py
+   ```
 
-This opens a page where you can set your genre, mood, energy, and other preferences with sliders/dropdowns in the sidebar, and see ranked recommendations with a score breakdown for each song. There's also an "✨ Or just describe your taste in your own words" box above the results (needs `GROQ_API_KEY`, see above) and a "✨ AI explanation" tab on each recommendation card.
+5. Or run the web app instead:
 
-### Running Tests
+   ```bash
+   streamlit run src/app.py
+   ```
 
-Run the tests with:
+   This opens a page where you can set genre, mood, energy, and other preferences with sliders/dropdowns in the sidebar, see ranked recommendations with a score breakdown for each song, describe your taste in your own words in the "✨" box above the results, and open an "✨ AI explanation" tab on each recommendation card.
 
-```bash
-pytest
-```
+6. Run the tests:
 
-This includes `tests/test_rag.py` and `tests/test_reliability.py`, which cover the AI features' surrounding logic (retrieval, JSON parsing, consistency/groundedness scoring) against fake LLM responses -- no `GROQ_API_KEY` or network access needed for `pytest` to pass. Only the live paths (the Streamlit AI box/tabs, `python -m src.reliability`) need a real key.
+   ```bash
+   pytest
+   ```
 
-You can add more tests in `tests/test_recommender.py`.
+   This covers the deterministic core, the planner, and the AI features' surrounding logic (retrieval, JSON parsing, consistency/groundedness scoring) against fake LLM responses — no `GROQ_API_KEY` or network access needed.
 
----
+7. (Optional, needs `GROQ_API_KEY`) Run the live reliability harness:
 
-## Sample Recommendation Output
+   ```bash
+   python -m src.reliability
+   ```
 
-Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
+   Scores the golden cases in `data/eval_cases.json` against the real LLM and writes `logs/reliability_report.md`.
 
-```
-======================================================================
-🎵  YOUR TOP SONG RECOMMENDATIONS  🎵
-======================================================================
-👤 Profile: genre=pop | mood=happy | energy=0.8 | accousticness=0.2
-======================================================================
+## Sample Interactions
 
-🥇 #1  Sunrise City — Neon Echo
-   ⭐ Score: 94.8/100
-   🎸 Genre   ✅ match (pop vs pop): +35.0 pts
-   🎭 Mood    ✅ match (happy vs happy): +30.0 pts
-   ⚡ Energy  similarity 0.98 (song 0.82 vs target 0.80): +19.6 pts
-   🎻 Acoustic similarity 0.68 (song 0.18 vs target 0.50): +10.2 pts
-----------------------------------------------------------------------
-🥈 #2  Rooftop Lights — Indigo Parade
-   ⭐ Score: 61.9/100
-   🎸 Genre   ❌ no match (indie pop vs pop): +0.0 pts
-   🎭 Mood    ✅ match (happy vs happy): +30.0 pts
-   ⚡ Energy  similarity 0.96 (song 0.76 vs target 0.80): +19.2 pts
-   🎻 Acoustic similarity 0.85 (song 0.35 vs target 0.50): +12.8 pts
-----------------------------------------------------------------------
-🥉 #3  Gym Hero — Max Pulse
-   ⭐ Score: 60.7/100
-   🎸 Genre   ✅ match (pop vs pop): +35.0 pts
-   🎭 Mood    ❌ no match (intense vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.87 (song 0.93 vs target 0.80): +17.4 pts
-   🎻 Acoustic similarity 0.55 (song 0.05 vs target 0.50): +8.2 pts
-----------------------------------------------------------------------
-🎶 #4  Night Drive Loop — Neon Echo
-   ⭐ Score: 29.8/100
-   🎸 Genre   ❌ no match (synthwave vs pop): +0.0 pts
-   🎭 Mood    ❌ no match (moody vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.95 (song 0.75 vs target 0.80): +19.0 pts
-   🎻 Acoustic similarity 0.72 (song 0.22 vs target 0.50): +10.8 pts
-----------------------------------------------------------------------
-🎶 #5  Island Drift — Solar Tide
-   ⭐ Score: 29.5/100
-   🎸 Genre   ❌ no match (reggae vs pop): +0.0 pts
-   🎭 Mood    ❌ no match (carefree vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.80 (song 0.60 vs target 0.80): +16.0 pts
-   🎻 Acoustic similarity 0.90 (song 0.40 vs target 0.50): +13.5 pts
-----------------------------------------------------------------------
-
-🎧 Enjoy the music!
+**1. Messy structured input, caught by the planning/validation layer.** Input: `{"genre": "pop ", "mood": "happy", "energy": float("nan"), "acousticness": True}` — a trailing space, an out-of-range energy value, and a boolean typed under the wrong field name.
 
 ```
+INFO: [genre] trimmed whitespace from genre ('pop ' -> 'pop')
+WARNING: [energy] energy value nan is invalid (must be a number in [0, 1]);
+         excluding energy from scoring instead of letting it corrupt the ranking
+WARNING: [acousticness] found a boolean under 'acousticness' (True); treating it
+         as likes_acoustic=True (pass a numeric 0-1 value under 'acousticness'
+         for a fine-grained target instead)
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
+#1 Sunflower — Post Malone & Swae Lee   score=94.5
+#2 Levitating — Dua Lipa                score=93.8
+#3 Havana — Camila Cabello              score=93.2
+```
 
----
+Instead of a silently corrupted or meaningless ranking, every problem is explained and the ranking is still meaningful.
 
-## Stress Tests:
-1. 
-  Input: user_prefs = {"genre": "pop ", "mood": "happy", "energy": 0.8, "accousticness": True}
+**2. Natural-language taste query (RAG taste parser), fed straight into the same scorer.** Input: `"I want something upbeat and nostalgic, kind of like early-2000s pop."`
 
-  Output
-  ```
-  ======================================================================
-🎵  YOUR TOP SONG RECOMMENDATIONS  🎵
-======================================================================
-👤 Profile: genre=pop  | mood=happy | energy=0.8 | accousticness=True
-======================================================================
+```
+Parsed profile: {'genre': 'pop', 'mood': 'nostalgic', 'energy': 0.8, 'preferred_decade': '2000s'}
+Grounded on: genre-pop, energy-vocabulary, decade-vocabulary, genre-indie-pop
 
-🥇 #1  Rooftop Lights — Indigo Parade
-   ⭐ Score: 61.9/100
-   🎸 Genre   ❌ no match (indie pop vs pop ): +0.0 pts
-   🎭 Mood    ✅ match (happy vs happy): +30.0 pts
-   ⚡ Energy  similarity 0.96 (song 0.76 vs target 0.80): +19.2 pts
-   🎻 Acoustic similarity 0.85 (song 0.35 vs target 0.50): +12.8 pts
-----------------------------------------------------------------------
-🥈 #2  Sunrise City — Neon Echo
-   ⭐ Score: 59.8/100
-   🎸 Genre   ❌ no match (pop vs pop ): +0.0 pts
-   🎭 Mood    ✅ match (happy vs happy): +30.0 pts
-   ⚡ Energy  similarity 0.98 (song 0.82 vs target 0.80): +19.6 pts
-   🎻 Acoustic similarity 0.68 (song 0.18 vs target 0.50): +10.2 pts
-----------------------------------------------------------------------
-🥉 #3  Night Drive Loop — Neon Echo
-   ⭐ Score: 29.8/100
-   🎸 Genre   ❌ no match (synthwave vs pop ): +0.0 pts
-   🎭 Mood    ❌ no match (moody vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.95 (song 0.75 vs target 0.80): +19.0 pts
-   🎻 Acoustic similarity 0.72 (song 0.22 vs target 0.50): +10.8 pts
-----------------------------------------------------------------------
-🎶 #4  Island Drift — Solar Tide
-   ⭐ Score: 29.5/100
-   🎸 Genre   ❌ no match (reggae vs pop ): +0.0 pts
-   🎭 Mood    ❌ no match (carefree vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.80 (song 0.60 vs target 0.80): +16.0 pts
-   🎻 Acoustic similarity 0.90 (song 0.40 vs target 0.50): +13.5 pts
-----------------------------------------------------------------------
-🎶 #5  Concrete Sermon — MC Vantage
-   ⭐ Score: 28.7/100
-   🎸 Genre   ❌ no match (hip-hop vs pop ): +0.0 pts
-   🎭 Mood    ❌ no match (confident vs happy): +0.0 pts
-   ⚡ Energy  similarity 1.00 (song 0.80 vs target 0.80): +20.0 pts
-   🎻 Acoustic similarity 0.58 (song 0.08 vs target 0.50): +8.7 pts
-----------------------------------------------------------------------
+🥇 #1 Since U Been Gone — Kelly Clarkson   72.0/100
+🥈 #2 Chicken Fried — Zac Brown Band       68.5/100
+🥉 #3 4th Avenue Cafe — Lamp               68.0/100
+```
 
-🎧 Enjoy the music!
-  ```
-2. 
-  Input: user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8, "accousticness": True}
+**3. Grounded explanation for a top recommendation.** Input: profile `{"genre": "pop", "mood": "happy", "energy": 0.8, "likes_acoustic": False}`, top pick "Blinding Lights" (99.2/100).
 
-  Output
-  ```
-  ======================================================================
-🎵  YOUR TOP SONG RECOMMENDATIONS  🎵
-======================================================================
-👤 Profile: genre=pop | mood=happy | energy=0.8 | accousticness=True
-======================================================================
+```
+Blinding Lights fits your taste perfectly: it's a pop track with a happy,
+upbeat vibe that matches your target mood, and its energy level is spot-on
+at 0.80. The song's polished, electronic production and bright hooks give
+it a high-energy feel, while the acoustic similarity score shows it's
+comfortably close to the sound you enjoy.
 
-🥇 #1  Sunrise City — Neon Echo
-   ⭐ Score: 94.8/100
-   🎸 Genre   ✅ match (pop vs pop): +35.0 pts
-   🎭 Mood    ✅ match (happy vs happy): +30.0 pts
-   ⚡ Energy  similarity 0.98 (song 0.82 vs target 0.80): +19.6 pts
-   🎻 Acoustic similarity 0.68 (song 0.18 vs target 0.50): +10.2 pts
-----------------------------------------------------------------------
-🥈 #2  Rooftop Lights — Indigo Parade
-   ⭐ Score: 61.9/100
-   🎸 Genre   ❌ no match (indie pop vs pop): +0.0 pts
-   🎭 Mood    ✅ match (happy vs happy): +30.0 pts
-   ⚡ Energy  similarity 0.96 (song 0.76 vs target 0.80): +19.2 pts
-   🎻 Acoustic similarity 0.85 (song 0.35 vs target 0.50): +12.8 pts
-----------------------------------------------------------------------
-🥉 #3  Gym Hero — Max Pulse
-   ⭐ Score: 60.7/100
-   🎸 Genre   ✅ match (pop vs pop): +35.0 pts
-   🎭 Mood    ❌ no match (intense vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.87 (song 0.93 vs target 0.80): +17.4 pts
-   🎻 Acoustic similarity 0.55 (song 0.05 vs target 0.50): +8.2 pts
-----------------------------------------------------------------------
-🎶 #4  Night Drive Loop — Neon Echo
-   ⭐ Score: 29.8/100
-   🎸 Genre   ❌ no match (synthwave vs pop): +0.0 pts
-   🎭 Mood    ❌ no match (moody vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.95 (song 0.75 vs target 0.80): +19.0 pts
-   🎻 Acoustic similarity 0.72 (song 0.22 vs target 0.50): +10.8 pts
-----------------------------------------------------------------------
-🎶 #5  Island Drift — Solar Tide
-   ⭐ Score: 29.5/100
-   🎸 Genre   ❌ no match (reggae vs pop): +0.0 pts
-   🎭 Mood    ❌ no match (carefree vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.80 (song 0.60 vs target 0.80): +16.0 pts
-   🎻 Acoustic similarity 0.90 (song 0.40 vs target 0.50): +13.5 pts
-----------------------------------------------------------------------
+Grounded on: genre-jazz, artist-neon-echo, genre-pop
+```
 
-🎧 Enjoy the music!
-  ```
-3. 
-  Input: user_prefs = {"genre": "pop", "mood": "happy", "energy": float("nan"), "accousticness": 0.3}
-  
-  Output
-  ```
-======================================================================
-🎵  YOUR TOP SONG RECOMMENDATIONS  🎵
-======================================================================
-👤 Profile: genre=pop | mood=happy | energy=nan | accousticness=0.3
-======================================================================
+(Note the "genre-jazz" and "artist-neon-echo" sources retrieved here are mostly irrelevant to Blinding Lights — a real example of the keyword-retriever pulling loosely-related notes; see Testing Summary.)
 
-🥇 #1  Sunrise City — Neon Echo
-   ⭐ Score: nan/100
-   🎸 Genre   ✅ match (pop vs pop): +35.0 pts
-   🎭 Mood    ✅ match (happy vs happy): +30.0 pts
-   ⚡ Energy  similarity nan (song 0.82 vs target nan): +nan pts
-   🎻 Acoustic similarity 0.68 (song 0.18 vs target 0.50): +10.2 pts
-----------------------------------------------------------------------
-🥈 #2  Midnight Coding — LoRoom
-   ⭐ Score: nan/100
-   🎸 Genre   ❌ no match (lofi vs pop): +0.0 pts
-   🎭 Mood    ❌ no match (chill vs happy): +0.0 pts
-   ⚡ Energy  similarity nan (song 0.42 vs target nan): +nan pts
-   🎻 Acoustic similarity 0.79 (song 0.71 vs target 0.50): +11.8 pts
-----------------------------------------------------------------------
-🥉 #3  Storm Runner — Voltline
-   ⭐ Score: nan/100
-   🎸 Genre   ❌ no match (rock vs pop): +0.0 pts
-   🎭 Mood    ❌ no match (intense vs happy): +0.0 pts
-   ⚡ Energy  similarity nan (song 0.91 vs target nan): +nan pts
-   🎻 Acoustic similarity 0.60 (song 0.10 vs target 0.50): +9.0 pts
-----------------------------------------------------------------------
-🎶 #4  Library Rain — Paper Lanterns
-   ⭐ Score: nan/100
-   🎸 Genre   ❌ no match (lofi vs pop): +0.0 pts
-   🎭 Mood    ❌ no match (chill vs happy): +0.0 pts
-   ⚡ Energy  similarity nan (song 0.35 vs target nan): +nan pts
-   🎻 Acoustic similarity 0.64 (song 0.86 vs target 0.50): +9.6 pts
-----------------------------------------------------------------------
-🎶 #5  Gym Hero — Max Pulse
-   ⭐ Score: nan/100
-   🎸 Genre   ✅ match (pop vs pop): +35.0 pts
-   🎭 Mood    ❌ no match (intense vs happy): +0.0 pts
-   ⚡ Energy  similarity nan (song 0.93 vs target nan): +nan pts
-   🎻 Acoustic similarity 0.55 (song 0.05 vs target 0.50): +8.2 pts
-----------------------------------------------------------------------
+## Design Decisions
 
-🎧 Enjoy the music!
-  ```
-1. 
-  Input: user_prefs = {"genre": "lofi", "mood": "chill", "energy": 0.4, "accousticness": True, "danceability": 1.0}
+- **Distance-based scoring instead of thresholds.** Energy and acousticness are scored by how close they are to the target, not by a pass/fail cutoff, because "close enough" felt like the more honest signal for continuous features. Trade-off: it means two very different-sounding songs can post nearly the same score if their numbers land in the same neighborhood.
+- **Genre and mood weighted highest (55% combined).** This encodes an assumption — that most listeners care more about genre/mood than energy/acousticness — rather than something learned per-user. Trade-off: a listener who actually prioritizes energy over genre gets recommendations that don't reflect that, and the system has no way to find out.
+- **Genre/mood matching stays case-sensitive and exact**, on purpose, even though it's the most common source of "no match." Loosening it would hide real mismatches (e.g. "Pop" vs "indie pop") behind fuzzy string logic that's harder to reason about. The planner's whitespace-trimming is a deliberate, narrow exception to this, not a general fuzzy-match layer.
+- **Validation lives in its own layer (`planner.py`), separate from scoring.** Rather than scattering `if`-checks through the scoring function, every raw preference is cleaned and explained *before* scoring ever runs, and every decision is both returned as a `Notice` and logged to `logs/recommender.log`. Trade-off: an extra indirection step, but it means the scorer itself can stay simple and assume clean input.
+- **RAG output goes through the same validation as manual input**, instead of getting special-cased. An LLM-parsed profile with a bad field is treated exactly like a user typo — same `PlanningError`/`Notice` path. Trade-off: it means the system doesn't (yet) tell a listener "the AI misread you" versus "you typed something odd" — those failure modes currently look identical.
+- **Explanations are constrained to cite only the score breakdown and retrieved notes**, never free-form knowledge about the song or artist. This trades away more colorful, informative-sounding explanations for ones that are actually checkable against a source — directly because the alternative (an unchecked LLM claim) is worse than the plain point breakdown it replaces.
+- **Retrieval is keyword/tag overlap, not embeddings.** Simple, dependency-light, and easy to debug by reading the knowledge base directly. Trade-off, visible in Sample Interaction 3 above: it can pull in a loosely-related note (like a wrong genre reference) just because it shares a word, and it will miss a genuinely relevant note that happens to use different wording.
 
-  Output
-  ```
-  ======================================================================
-🎵  YOUR TOP SONG RECOMMENDATIONS  🎵
-======================================================================
-👤 Profile: genre=lofi | mood=chill | energy=0.4 | accousticness=True
-======================================================================
+## Testing Summary
 
-🥇 #1  Midnight Coding — LoRoom
-   ⭐ Score: 96.4/100
-   🎸 Genre   ✅ match (lofi vs lofi): +35.0 pts
-   🎭 Mood    ✅ match (chill vs chill): +30.0 pts
-   ⚡ Energy  similarity 0.98 (song 0.42 vs target 0.40): +19.6 pts
-   🎻 Acoustic similarity 0.79 (song 0.71 vs target 0.50): +11.8 pts
-----------------------------------------------------------------------
-🥈 #2  Library Rain — Paper Lanterns
-   ⭐ Score: 93.6/100
-   🎸 Genre   ✅ match (lofi vs lofi): +35.0 pts
-   🎭 Mood    ✅ match (chill vs chill): +30.0 pts
-   ⚡ Energy  similarity 0.95 (song 0.35 vs target 0.40): +19.0 pts
-   🎻 Acoustic similarity 0.64 (song 0.86 vs target 0.50): +9.6 pts
-----------------------------------------------------------------------
-🥉 #3  Focus Flow — LoRoom
-   ⭐ Score: 65.8/100
-   🎸 Genre   ✅ match (lofi vs lofi): +35.0 pts
-   🎭 Mood    ❌ no match (focused vs chill): +0.0 pts
-   ⚡ Energy  similarity 1.00 (song 0.40 vs target 0.40): +20.0 pts
-   🎻 Acoustic similarity 0.72 (song 0.78 vs target 0.50): +10.8 pts
-----------------------------------------------------------------------
-🎶 #4  Spacewalk Thoughts — Orbit Bloom
-   ⭐ Score: 56.3/100
-   🎸 Genre   ❌ no match (ambient vs lofi): +0.0 pts
-   🎭 Mood    ✅ match (chill vs chill): +30.0 pts
-   ⚡ Energy  similarity 0.88 (song 0.28 vs target 0.40): +17.6 pts
-   🎻 Acoustic similarity 0.58 (song 0.92 vs target 0.50): +8.7 pts
-----------------------------------------------------------------------
-🎶 #5  Dust Road Home — Copper Wagon
-   ⭐ Score: 30.8/100
-   🎸 Genre   ❌ no match (country vs lofi): +0.0 pts
-   🎭 Mood    ❌ no match (nostalgic vs chill): +0.0 pts
-   ⚡ Energy  similarity 0.90 (song 0.50 vs target 0.40): +18.0 pts
-   🎻 Acoustic similarity 0.85 (song 0.65 vs target 0.50): +12.8 pts
-----------------------------------------------------------------------
+`pytest` (37 tests across `tests/test_recommender.py`, `tests/test_planner.py`, `tests/test_rag.py`, `tests/test_reliability.py`) passes fully offline, using fake LLM responses for anything AI-related — this is the regression net for the deterministic core and for the RAG/reliability code's own logic (parsing, retrieval, scoring math), independent of whether the real API is up or a real model's behavior drifts.
 
-🎧 Enjoy the music!
-  ```
-5. 
-  Input: user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8, "accousticness": 0.2}
+**What worked:** the deterministic core (score_song, planner validation) behaved consistently across every messy-input case tried by hand (NaN energy, a trailing-space genre, a preference typed under the wrong field name) — each one now produces a clear notice instead of a silently wrong ranking. Running the live reliability harness (`python -m src.reliability`) against the real Groq API, all three natural-language parsing cases came back fully consistent (1.00) across repeated runs and correctly recovered the expected genre.
 
+**What didn't:** the harness's one real-API check that regularly fails is the grounded-explanation case — groundedness averaged ~0.40 against a 0.5 threshold across repeated runs (pass rate 4/5 overall). Looking at the actual generated text (Sample Interaction 3), the explanation isn't fabricating anything, but the keyword-overlap groundedness metric doesn't reliably reward a paraphrase that says the same thing as the source notes in different words — and separately, the retriever sometimes surfaces a barely-related note (like a wrong-genre reference) that then gets counted as "grounded on," which is itself a retrieval-quality problem rather than a generation one.
 
-  Output
-  ```
-  ======================================================================
-🎵  YOUR TOP SONG RECOMMENDATIONS  🎵
-======================================================================
-👤 Profile: genre=pop | mood=happy | energy=0.8 | accousticness=0.2
-======================================================================
-
-🥇 #1  Sunrise City — Neon Echo
-   ⭐ Score: 94.8/100
-   🎸 Genre   ✅ match (pop vs pop): +35.0 pts
-   🎭 Mood    ✅ match (happy vs happy): +30.0 pts
-   ⚡ Energy  similarity 0.98 (song 0.82 vs target 0.80): +19.6 pts
-   🎻 Acoustic similarity 0.68 (song 0.18 vs target 0.50): +10.2 pts
-----------------------------------------------------------------------
-🥈 #2  Rooftop Lights — Indigo Parade
-   ⭐ Score: 61.9/100
-   🎸 Genre   ❌ no match (indie pop vs pop): +0.0 pts
-   🎭 Mood    ✅ match (happy vs happy): +30.0 pts
-   ⚡ Energy  similarity 0.96 (song 0.76 vs target 0.80): +19.2 pts
-   🎻 Acoustic similarity 0.85 (song 0.35 vs target 0.50): +12.8 pts
-----------------------------------------------------------------------
-🥉 #3  Gym Hero — Max Pulse
-   ⭐ Score: 60.7/100
-   🎸 Genre   ✅ match (pop vs pop): +35.0 pts
-   🎭 Mood    ❌ no match (intense vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.87 (song 0.93 vs target 0.80): +17.4 pts
-   🎻 Acoustic similarity 0.55 (song 0.05 vs target 0.50): +8.2 pts
-----------------------------------------------------------------------
-🎶 #4  Night Drive Loop — Neon Echo
-   ⭐ Score: 29.8/100
-   🎸 Genre   ❌ no match (synthwave vs pop): +0.0 pts
-   🎭 Mood    ❌ no match (moody vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.95 (song 0.75 vs target 0.80): +19.0 pts
-   🎻 Acoustic similarity 0.72 (song 0.22 vs target 0.50): +10.8 pts
-----------------------------------------------------------------------
-🎶 #5  Island Drift — Solar Tide
-   ⭐ Score: 29.5/100
-   🎸 Genre   ❌ no match (reggae vs pop): +0.0 pts
-   🎭 Mood    ❌ no match (carefree vs happy): +0.0 pts
-   ⚡ Energy  similarity 0.80 (song 0.60 vs target 0.80): +16.0 pts
-   🎻 Acoustic similarity 0.90 (song 0.40 vs target 0.50): +13.5 pts
-----------------------------------------------------------------------
-
-🎧 Enjoy the music!
-  ```
+**What I learned:** consistency and groundedness are genuinely separate failure modes, not one "is the AI working" score — this system is highly consistent but only middlingly grounded, and a single pass/fail number would have hidden that. It also became clear that the evaluation code needs the same scrutiny as the feature it's grading: a keyword-overlap heuristic is transparent and cheap, but it can be wrong in both directions (under-crediting a good paraphrase, over-crediting an unrelated but keyword-adjacent note), so a failing eval case doesn't automatically mean the underlying feature is broken.
 
 ## Reflection
 
-See [`model_card.md`](model_card.md) for the full writeup on intended use, data, strengths, limitations/bias, evaluation, and personal reflection.
+Building the validation layer *before* adding the LLM made something click: most of what gets called "AI reliability" here turned out to be the same data-hygiene problem the deterministic core already had (a NaN, a typo, a mismatched field name), just one step further upstream — the exact same messy input that used to silently corrupt a score would have just as silently produced a bad prompt. The harder, genuinely new problem was realizing that testing generative output needs different tools than testing deterministic code: there's no single assertEqual for "did this explanation invent something," so the reliability harness itself — the consistency and groundedness checkers — had to be designed, and then treated with just as much skepticism as the feature it was checking.
 
-
-
-
+For the graded responsible-AI reflection — how I collaborated with AI, one helpful and one flawed AI suggestion, and this system's limitations — see [`model_card.md`](model_card.md).

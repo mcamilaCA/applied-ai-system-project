@@ -136,12 +136,21 @@ class LLMClient:
 
     def generate(self, prompt: str, max_tokens: int = 512) -> str:
         client = self._get_client()
-        response = client.chat.completions.create(
-            model=self.model,
-            max_tokens=max_tokens,
-            reasoning_effort="low",
-            messages=[{"role": "user", "content": prompt}],
-        )
+        import groq
+
+        try:
+            response = client.chat.completions.create(
+                model=self.model,
+                max_tokens=max_tokens,
+                reasoning_effort="low",
+                messages=[{"role": "user", "content": prompt}],
+            )
+        except groq.GroqError as error:
+            # Covers rate limits, timeouts, connection drops, auth failures, etc. --
+            # translated to RuntimeError so callers only need to handle the one
+            # exception type this class already documents (see class docstring),
+            # instead of importing groq themselves to catch its exception hierarchy.
+            raise RuntimeError(f"Groq API call failed: {error}") from error
         return response.choices[0].message.content
 
     def generate_json(self, prompt: str, max_tokens: int = 512) -> Dict[str, Any]:

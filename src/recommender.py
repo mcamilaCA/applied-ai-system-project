@@ -298,11 +298,16 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     Scores a single song against user preferences.
     Required by recommend_songs() and src/main.py
 
-    user_prefs supports: genre, mood, energy, likes_acoustic, preferred_decade,
-    wants_instrumental (all optional except genre/mood/energy).
+    user_prefs supports: genre, mood, energy, likes_acoustic, target_acousticness,
+    preferred_decade, wants_instrumental (all optional except genre/mood/energy).
     likes_acoustic/wants_instrumental/preferred_decade are optional so callers
     (like the starter main.py profile) that don't specify them still get a
     sensible neutral score instead of a crash.
+
+    target_acousticness, when present, is a fine-grained 0-1 target set by
+    src/planner.py's plan_user_prefs from a numeric "acousticness" preference;
+    it takes precedence over the coarser liked/disliked anchor derived from
+    likes_acoustic.
 
     _skip_energy/_skip_acousticness are set by src/planner.py's plan_user_prefs
     when the corresponding raw value was invalid (e.g. NaN, wrong type); when
@@ -312,11 +317,14 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     skip_energy = bool(user_prefs.get("_skip_energy"))
     skip_acousticness = bool(user_prefs.get("_skip_acousticness"))
 
-    likes_acoustic = user_prefs.get("likes_acoustic")
-    if skip_acousticness or likes_acoustic is None:
-        target_acousticness = 0.5
+    if "target_acousticness" in user_prefs:
+        target_acousticness = user_prefs["target_acousticness"]
     else:
-        target_acousticness = acoustic_target(likes_acoustic)
+        likes_acoustic = user_prefs.get("likes_acoustic")
+        if skip_acousticness or likes_acoustic is None:
+            target_acousticness = 0.5
+        else:
+            target_acousticness = acoustic_target(likes_acoustic)
 
     target_energy = 0.5 if skip_energy else float(user_prefs.get("energy", 0.5))
 
